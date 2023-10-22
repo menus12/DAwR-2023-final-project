@@ -12,5 +12,5 @@ frame2 <- read_excel("Datafiles/participants200.xlsx")
 frame3 <- read_excel("Datafiles/participants300.xlsx")
 
 # Merging all sheets into a single dataframe
-cis_data <- rbind(frame1, frame2, frame3)
+esim_data <- rbind(frame1, frame2, frame3)
 
