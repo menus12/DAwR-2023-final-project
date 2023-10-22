@@ -97,12 +97,12 @@ Another scenario is the demonstration exams, which is not a competition itself a
 
 In Russia there are different levels for local WorldSkills competitions:
 
-- Regional competitions across number of colleges
-- National competitions across regions
+- Regional competitions among regional colleges
+- National competitions among regions
 - University competitions for students of given university
 - National inter-university competitions
-- HiTech competition across employees of companies in industrial sector
-- DigitalSkills competition across college students, university students and employees companies in IT sector
+- HiTech competition among employees of companies in industrial sector
+- DigitalSkills competition among college students, university students and employees companies in IT sector
 
 So there may be a case where a given competitor participates in a sequence of competitions at different levels (e.g. Regional, National, HiTech, DigitalSkills) or may be a guest competitor in other regional competitions (usually when preparing for National). It's reasonable to assume that the average score of such a competitor should improve each time he/she participates in the next competition.
 
