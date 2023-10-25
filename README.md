@@ -112,10 +112,430 @@ To address this question, we can analyze the performance of competitors who have
 
 It's often the case that a particular region has same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an avarege competitor should tend to improve over time as well.
 
-To explore this, we can group competitors by the presence of a compatriot expert (FK_COMPATRIOT) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
+To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
 
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
+
+The foremost step is to perform exporatory data analysis:
+
+- take a brief look at the raw data
+- transform dataset in the more convenient way for exploration purposes
+- clean up observations which are missing important values for analysis
+
+### Exploring raw data
+
+Raw data is provided as three XLSX tables:
+
+- participants100.xlsx
+- participants200.xlsx
+- participants300.xlsx
+
+All data operations will be performed using [R language](https://posit.co/download/rstudio-desktop/). 
+
+First we will load Excel tables into R, merge all tables in single dataframe and look at columns.
+
+```R
+# Loading required libraries
+library(readxl)
+library(tidyverse)
+library(readr)
+
+# Loading excel sheets 
+frame1 <- read_excel("Datafiles/participants100.xlsx")
+frame2 <- read_excel("Datafiles/participants200.xlsx")
+frame3 <- read_excel("Datafiles/participants300.xlsx")
+
+# Merging all sheets into a single dataframe
+esim_data <- rbind(frame1, frame2, frame3)
+
+# Exploring dataframe columns
+glimpse(esim_data)
+
+Rows: 600,000
+Columns: 25
+$ pk_participant         <dbl> 5, 6, 7, 9, 10, 11, 12, 13, 22, 24, 25, 26, 28, 29, 37, 40, 42,~
+$ fkUsers                <dbl> 84, 81, 79, 82, 85, 87, 86, 84, 81, 82, 84, 87, 79, 80, 79, 110~
+$ fkChamp                <dbl> 7, 7, 7, 7, 4, 4, 4, 4, 8, 11, 11, 11, 13, 13, 12, 14, 20, 12, ~
+$ fkComp                 <dbl> 164, 164, 187, 164, 164, 164, 164, 164, 176, 165, 166, 166, 166~
+$ ChampRole              <dbl> 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 4, 5, 5, 5, 5, 5, ~
+$ regionID               <dbl> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 3, ~
+$ mark100                <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ mark500                <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ medal                  <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ timestamp              <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ fkUserAdd              <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ competitorMarker       <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ expertGroupMarker      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ excludeFromResault     <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ fk_quotaCategory       <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ fk_command             <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ FK_USER_CP             <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ ACCESS_RKC             <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ FK_COMPATRIOT          <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ organization           <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ nok                    <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ participant_updated_at <chr> "2020-12-07 11:50:38", "2020-12-07 11:50:38", "2020-12-07 11:50~
+$ is_requested           <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ is_accepted            <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ mark700                <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+```
+
+As we see, there are 600 000 observations and 25 columns total. There are many 0s and NA values at the first glance. 
+
+Let's take a random sample of 20 rows.
+
+```R
+# Taking random 20 rows sample
+sample <- esim_data[sample(nrow(esim_data), 20), ]
+sample
+# A tibble: 20 x 25
+   pk_participant fkUsers fkChamp fkComp ChampRole regionID mark100 mark500 medal      timestamp
+            <dbl>   <dbl>   <dbl>  <dbl>     <dbl>    <dbl>   <dbl>   <dbl> <chr>      <chr>    
+ 1         454464 1187314   13980    341         4       68    NA        NA NA         2019-11-~
+ 2         284414  122757    5471    203         4       49    NA        NA NA         2019-03-~
+ 3         412062 1133052    8831    186         5       76    11.6     455 NA         2019-06-~
+ 4          30299   25044     240    188         4        2     0         0 NA         NA       
+ 5         366107 1055466   12215    212         5       49    70       501 Medallion~ 2019-06-~
+ 6         295854    6514    6309    165         1       65    NA        NA NA         2019-03-~
+ 7         248032 1065927    4821    423         5       76    31.0     468 NA         2018-12-~
+ 8          76802   55518     622    345         4        4     0         0 NA         NA       
+ 9         213018     832    4444    373         1       76    NA        NA NA         2018-09-~
+10         442016 1180196   13729    422         4       76    NA        NA NA         2019-10-~
+11          37354   31490     300    203         4       58     0         0 NA         NA       
+12         473468 1203706   15138    325         5       60    13.8     520 GOLD       2019-11-~
+13          18777   15659     170    184         4       49     0         0 NA         NA       
+14         160537  999571    3361    315         5       49    60.5     525 Medallion~ 2018-05-~
+15          45294   37705     316    261         5        8    97.5     533 SILVER     NA       
+16         257694   94043    4655    169         4        6    NA        NA NA         2019-01-~
+17          64160   47841     435    203         5       76    64.8     504 Medallion~ NA       
+18         100791    3149    1009    203         4       84    NA        NA NA         NA       
+19         261426   19797    4461    250         4       65    NA        NA NA         2019-02-~
+20         383233 1041131   10664    247         4       65    NA        NA NA         2019-06-~
+# i 15 more variables: fkUserAdd <dbl>, competitorMarker <lgl>, expertGroupMarker <chr>,
+#   excludeFromResault <chr>, fk_quotaCategory <dbl>, fk_command <dbl>, FK_USER_CP <dbl>,
+#   ACCESS_RKC <dbl>, FK_COMPATRIOT <dbl>, organization <lgl>, nok <dbl>,
+#   participant_updated_at <chr>, is_requested <dbl>, is_accepted <dbl>, mark700 <lgl>
+```
+
+From this sample we see some observations which are falls in our area of interest as well as some value which are missing the most important value ```mark100```, which is a main measure for performance evaluation to be used in all tested hypotesises.
+
+### Exploring unique values for variables 
+
+Next step is to figure out which values of provided variables might be useful for results explainnation, as well as which variables are useless and can be discarded.
+
+Based on raw data samples and provided description from data owner, there are some columns which are:
+
+- clearly related to the context of research, such as
+    - **pk_participant**: ID of competition result record (primary key)
+    - **fkUsers**: competitor reference (foreign key)
+    - **fkChamp**: competition event reference (foreign key)
+    - **fkComp**: skill trade reference (foreign key)
+    - **regionID**: code of participant's region origin 
+    - **mark100**: 100-point scale
+    - **mark500**: 500-point scale
+    - **medal**: type of medal awarded
+    - **FK_COMPATRIOT**: reference for compatriot expert ID (foreign key)
+    - **timestamp**: time when the result was locked in the system 
+    - **mark700**: 700-point scale
+
+- used only for internal purposes of eSIM and can be easily discarded:
+    - **fk_quotaCategory**: quota category for the competition (foreign key)
+    - **FK_USER_CP**: user ID in the digital platform (foreign key)
+    - **ACCESS_RKC**: whether the regional competition center has access to the record
+    - **fkUserAdd**: User ID of the user who added the result to the system (foreign key)
+    - **participant_updated_at**: time of last record update
+    - **is_requested**: field for access in the business process
+    - **is_accepted**: field for access in the business process
+
+- not clear so it's good to take a closer look to thse values:
+    - **ChampRole**: ID of the participant's role at the competition 
+    - **fk_command**: reference for a team membership (foreign key)
+    - **organization**: organization represented by the participant
+    - **nok**: participation in an independent qualification assessment project (for demonstration exams)
+    - **excludeFromResault**: marker for "out of contest" result 
+    - **competitorMarker**: marker for group competition
+    - **expertGroupMarker**: marker for specific expert group
+
+<!-- 
+Let's start from ```medal``` variable:
+
+```R
+# How many different values for medals
+length(unique(esim_data$medal))
+
+[1] 5
+
+# What are the types of medals 
+unique(esim_data$medal)
+
+[1] NA                         "GOLD"                     "Medallion for Excellence"
+[4] "BRONZE"                   "SILVER"   
+```
+
+Here values are clear and represent types of medal awarded to competitors. Note that ```Medallion for Excellence``` is the medal awarded for competitors who are *above the avarage level across all skills within one competition*, e.g. who have score >=500 in ```mark500``` (or >=700 in ```mark700``` since 2019). This variable is clearly useful for analysis.
+
+-->
+
+So let's take a look at ```ChampRole``` first:
+
+```R
+# How many different values for roles?
+length(unique(esim_data$ChampRole))
+[1] 18
+
+# What are the competition roles?
+unique(esim_data$ChampRole)
+[1]  4  5  1  7  2  3  6 28 29 22 20 30 31 33 34 35  8 36
+```
+
+There are some identifiers for competition roles for participants (required to be entered in CIS), but since these values might not be consistant across all CIS instances (and therefore inside eSIM), given that we don't have actual values for these identifiers we can easily discard this column.
+
+---
+
+Next we will look at ```fk_command``` column:
+
+```R
+# How many teams identifiers in the dataset
+length(unique(esim_data$fk_command)) 
+[1] 6145
+
+# What are the values
+head(unique(esim_data$fk_command),n = 10)
+[1]  0 21 30 29 28 26 27 33 46 35
+```
+
+It seems that there are some team identifiers which are linked to another tables. Due to absence of linked table these values are not very useful but we can keep the column to identify whether this is a team or personal result. 
+
+---
+
+Next, we explore is there any ```organization``` represented by competitors:
+
+```R
+# How many organizations represented by competitors in the dataset?
+length(unique(esim_data$organization))
+[1] 1
+
+unique(esim_data$organization) 
+[1] NA
+```
+
+The column is empty and clearly can be discarded.
+
+Now let's investigate ```nok``` values:
+
+```R
+# How many unique values in nok column?
+length(unique(esim_data$nok))
+[1] 2
+
+# What are these unique values?
+unique(esim_data$nok)
+[1] 0 1
+
+# Is there any results marked with nok=1 identifier?
+length(esim_data$nok[esim_data$nok == "1"]) 
+[1] 207
+```
+
+So we do have at least 207 values which are clearly represent demonstration exams. Note that it's not necesserily that evety DE marked with nok value, but either way it can be useful for future assumptions.
+
+---
+
+Next, look at the ```excludeFromResault``` variable:
+
+```R
+# How many unique values?
+length(unique(esim_data$excludeFromResault))
+[1] 3
+
+# What are the values?
+unique(esim_data$excludeFromResault)
+[1] NA    "YES" "N"  
+
+# How many results with non-NA value?
+nrow(esim_data %>% filter(!is.na(excludeFromResault)))
+[1] 13086
+
+# Check consistency between provided values
+tail(esim_data  %>% 
+       filter(excludeFromResault == "YES") %>% 
+       select(mark100, mark500, mark700, excludeFromResault))
+# A tibble: 6 x 4
+  mark100 mark500 mark700 excludeFromResault
+    <dbl>   <dbl> <lgl>   <chr>             
+1   81.9       NA NA      YES   # These results are look consistent enough            
+2    9.24      NA NA      YES   # since they are excluded and therefore            
+3   11.6       NA NA      YES   # mark500/mark700 scores are not present           
+4   21.4       NA NA      YES   #            
+5   40.5       NA NA      YES   #            
+6   20.2       NA NA      YES   #   
+
+tail(esim_data  %>% 
+       filter(excludeFromResault == "N") %>% 
+       select(mark100, mark500, mark700, excludeFromResault))
+# A tibble: 6 x 4
+  mark100 mark500 mark700 excludeFromResault
+    <dbl>   <dbl> <lgl>   <chr>             
+1    41.5     529 NA      N                 
+2    24.8     471 NA      N                 
+3     0         0 NA      N                 
+4    49.3      NA NA      N      # Note that these results should not be 
+5    47.8      NA NA      N      # excluded but mark500/mark700 is missing
+6     0         0 NA      N    
+
+tail(esim_data  %>% 
+       filter(is.na(excludeFromResault)) %>% 
+       select(mark100, mark500, mark700, excludeFromResault))
+# A tibble: 6 x 4
+  mark100 mark500 mark700 excludeFromResault
+    <dbl>   <dbl> <lgl>   <chr>             
+1    NA        NA NA      NA     # Also note that there are some rows where          
+2    NA        NA NA      NA     # mark100 is missing. We will take it into          
+3    NA        NA NA      NA     # account later on.          
+4    NA        NA NA      NA     #            
+5    28.4     529 NA      NA     # These results clearly not excluded          
+6    20.4     476 NA      NA     # but marker is not present
+```
+
+So here we see that ~13k results are marked with ```excludeFromResault```, which basically should mean that result is performed by a guest competitor, which doesn't add any valuable insights in our research context. Also we see that some observations marked with ```excludeFromResault``` are inconsistent, probably due to human error, therefore we won't keep this variable.
+
+---
+
+Next we go over ```competitorMarker``` variable:
+
+```R
+# Is there any valuable group markers for competitors?
+length(unique(esim_data$competitorMarker))
+[1] 1
+
+unique(esim_data$competitorMarker) 
+[1] NA
+```
+
+Column is empty and can be easily discarded.
+
+Finally, we explore valuses for ```expertGroupMarker``` column:
+
+```R
+# Is there any group markers for experts?
+length(unique(esim_data$expertGroupMarker))
+[1] 8
+
+unique(esim_data$expertGroupMarker) 
+[1] NA     "CERT" "NO"   "Н"    "С"    "N"    "W"    "S"   
+```
+
+There are some markers which are not really meaningful in context of our research, so this variable can be discarded. 
+
+### Transforming dataframe for brevity
+
+After a brief clarification of unique variables values which were not clear at first sight, we now can remove meaningless columns from our initial dataframe:
+
+```R
+# Removing columns which won't be used for research
+esim_data <- subset(esim_data, 
+                   select = -c(ChampRole,
+                               fkUserAdd,
+                               competitorMarker,
+                               expertGroupMarker,
+                               fk_quotaCategory,
+                               FK_USER_CP,
+                               ACCESS_RKC,
+                               organization,
+                               excludeFromResault,
+                               participant_updated_at,
+                               is_requested,
+                               is_accepted))
+```
+
+We also would like to move column ```mark700``` right after mark500 for more convenient appearance.
+
+```R
+# Moving mark700 column after mark500 for convenience
+esim_data <- esim_data %>% relocate(mark700, .after = mark500)
+```
+
+To not confuse with some of the variable names, we will rename some columns for clearer reference:
+
+```R
+colnames(esim_data) <- c("result", 
+                         "competitor", 
+                         "competition", 
+                         "skill", 
+                         "region", 
+                         "mark100", 
+                         "mark500", 
+                         "mark700", 
+                         "medal", 
+                         "timestamp", 
+                         "guest", 
+                         "team", 
+                         "expert", 
+                         "nok")
+```
+
+So now our dataframe looks more clear and concise:
+
+```R
+glimpse(esim_data)
+Rows: 600,000
+Columns: 13
+$ result      <dbl> 5, 6, 7, 9, 10, 11, 12, 13, 22, 24, 25, 26, 28, 29, 37, 40, 42, 51, 52, 53,~
+$ competitor  <dbl> 84, 81, 79, 82, 85, 87, 86, 84, 81, 82, 84, 87, 79, 80, 79, 110, 138, 308, ~
+$ competition <dbl> 7, 7, 7, 7, 4, 4, 4, 4, 8, 11, 11, 11, 13, 13, 12, 14, 20, 12, 12, 12, 21, ~
+$ skill       <dbl> 164, 164, 187, 164, 164, 164, 164, 164, 176, 165, 166, 166, 166, 166, 193, ~
+$ region      <dbl> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 3, 85, 16, 16, ~
+$ mark100     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ mark500     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ mark700     <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ medal       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ expert      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+$ nok         <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
+```
+
+### Cleaning up observations
+
+As we still have many observations with missing values on our main variable of interest ```mark100```, which might be a human/migration error or test records, we would like to get rid of those observations where ```mark100``` is 0 or NA:
+
+```R
+# How many observations where mark100 is missing?
+nrow(esim_data[is.na(esim_data$mark100), ])
+[1] 250734
+
+# How many observations where mark100 is 0?
+nrow(esim_data %>% filter(mark100 == 0))
+[1] 51901
+
+# Removing observations where mark100 is missing (NA or 0)
+esim_data <- esim_data %>% 
+  drop_na(mark100) %>% 
+  filter(mark100 > 0)
+```
+
+We also would like to check whether there are any duplicate rows after export of raw data from eSIM:
+
+```R
+# Check for duplicate result IDs
+length(unique(esim_data$result)) == nrow(esim_data)
+[1] FALSE
+```
+
+So clearly there are some duplicate values which we would like to remove:
+
+```R
+# Removing duplicate rows from dataframe
+esim_data <- distinct(esim_data)
+length(unique(esim_data$result)) == nrow(esim_data)
+[1] TRUE
+
+nrow(esim_data)
+[1] 253080
+```
+
+Thus, our final dataset is about 42% of its original size. 
 
 ## Results of the data analysis
 <!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
