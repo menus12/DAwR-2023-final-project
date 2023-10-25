@@ -9,9 +9,9 @@
 ## Introduction
 <!-- An introductory chapter in which the purpose and design of the (sub)study is explained and in which the research questions are described -->
 
-WorldSkills International is a global organization dedicated to promoting excellence in vocational and technical education. It brings together young professionals from around the world to compete in skill-based competitions that showcase their talents and expertise in a wide range of fields, from engineering and technology to hospitality and creative arts. These competitions are assessed by a panel of expert judges who rigorously evaluate participants' performance, measuring their precision, creativity, and adherence to international industry standards.
+[WorldSkills International](https://worldskills.org/) is a global organization dedicated to promoting excellence in vocational and technical education. It brings together young professionals from around the world to compete in skill-based competitions that showcase their talents and expertise in a wide range of fields, from engineering and technology to hospitality and creative arts. These competitions are assessed by a panel of expert judges who rigorously evaluate participants' performance, measuring their precision, creativity, and adherence to international industry standards.
 
-WorldSkills Russia as a member organization is in charge for govern and oversee that national and regional competition events are comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
+[WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge for govern and oversee that national and regional competition events are comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
 These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade.
 
@@ -277,6 +277,8 @@ Here values are clear and represent types of medal awarded to competitors. Note 
 
 -->
 
+---
+
 So let's take a look at ```ChampRole``` first:
 
 ```R
@@ -321,6 +323,8 @@ unique(esim_data$organization)
 ```
 
 The column is empty and clearly can be discarded.
+
+---
 
 Now let's investigate ```nok``` values:
 
@@ -414,6 +418,8 @@ unique(esim_data$competitorMarker)
 ```
 
 Column is empty and can be easily discarded.
+
+---
 
 Finally, we explore valuses for ```expertGroupMarker``` column:
 
