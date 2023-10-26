@@ -406,6 +406,21 @@ So here we see that ~13k results are marked with ```excludeFromResault```, which
 
 ---
 
+We also noted that column types of ```mark500``` and ```mark700``` are different. If we saw reasonable values for ```mark500```, let's check whether we do have any values in ```mark700``` other than ```NA```:
+
+```R
+# Check non-NA unique values for mark700
+length(unique(esim_data$mark700))
+[1] 1
+
+unique(esim_data$mark700) 
+[1] NA
+```
+
+Clearly there are no 700-scale marks, most likely because it was introduced by WSI just in 2019 in CIS 4.0, but WSR were using older CIS 3.x for backward compatibility up until 2022, which had no support for 700-scale. So clearly we can get rid of this column as well.
+
+---
+
 Next we go over ```competitorMarker``` variable:
 
 ```R
@@ -452,14 +467,8 @@ esim_data <- subset(esim_data,
                                excludeFromResault,
                                participant_updated_at,
                                is_requested,
-                               is_accepted))
-```
-
-We also would like to move column ```mark700``` right after mark500 for more convenient appearance.
-
-```R
-# Moving mark700 column after mark500 for convenience
-esim_data <- esim_data %>% relocate(mark700, .after = mark500)
+                               is_accepted,
+                               mark700))
 ```
 
 To not confuse with some of the variable names, we will rename some columns for clearer reference:
@@ -472,7 +481,6 @@ colnames(esim_data) <- c("result",
                          "region", 
                          "mark100", 
                          "mark500", 
-                         "mark700", 
                          "medal", 
                          "timestamp", 
                          "guest", 

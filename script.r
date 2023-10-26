@@ -71,6 +71,10 @@ tail(esim_data  %>%
        select(mark100, mark500, mark700, excludeFromResault))
 # some observations marked with ```excludeFromResault``` are inconsistent
 
+# Check non-NA unique values for mark700
+length(unique(esim_data$mark700))
+unique(esim_data$mark700) 
+
 # Is there any valuable group markers for competitors?
 length(unique(esim_data$competitorMarker))
 unique(esim_data$competitorMarker) 
@@ -94,7 +98,8 @@ esim_data <- subset(esim_data,
                                excludeFromResault,
                                participant_updated_at,
                                is_requested,
-                               is_accepted))
+                               is_accepted,
+                               mark700))
 
 
 
@@ -109,7 +114,6 @@ colnames(esim_data) <- c("result",
                          "region", 
                          "mark100", 
                          "mark500", 
-                         "mark700", 
                          "medal", 
                          "timestamp", 
                          "team", 
