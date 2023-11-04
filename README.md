@@ -13,53 +13,25 @@
 
 [WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge for govern and oversee that national and regional competition events are comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
-These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade.
+<!-- These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade. -->
 
 Current research is targeted to explore and analyze data from WorldSkills Russia competition events and demonstration exams to answer following questions:
 
+<!-- 
 - Does the regional training system have a significant impact on the competitor's performance?
-- Whether the presence of a compatriot expert has a significant effect on a competitor's performance?
+- Whether the presence of a compatriot expert has a significant effect on a competitor's performance? 
+-->
 - Whether repeated participation in competitions significantly improves a competitor's average score?
 - Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
 
 ## Operationalization of the research questions
 <!-- Describe the data that will be used and how the questions will be answered on the basis of this data. The data analysis itself is not yet described here. So do tell ‘Data file [X] comes from [Y] and can answer the posed questions because [Z]’, but do not yet describe the data itself -->
 
-Each competition event (or demonstration exam) uses the Competition Information System (CIS) to record competition (exam) results. A separate instance of CIS is used for each event, so all event results are stored in a separate database instance. In order to have an overview of all competition and exam events, WorldSkills Russia has developed its own aggregation system called Electronic System for Internet Monitoring (eSIM).
+Each competition event uses the Competition Information System (CIS) to record competition results. A separate instance of CIS is used for each event, so all event results are stored in a separate database instance. In order to have an overview of all competition events, WorldSkills Russia has developed its own aggregation system called Electronic System for Internet Monitoring (eSIM).
 
 The raw data used for this research was kindly provided by the autonomous non-profit organisation "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
 
-Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
-
-### Description of raw data variables with comments from data owner
-
-- **pk_participant**: ID of competition result record (primary key)
-- **fkUsers**: competitor reference (foreign key)
-- **fkChamp**: competition event reference (foreign key)
-- **fkComp**: skill trade reference (foreign key)
-- **ChampRole**: ID of the participant's role at the competition 
-- **regionID**: code of participant's region origin 
-- **mark100**: 100-point scale
-- **mark500**: 500-point scale
-- **medal**: type of medal awarded
-- **timestamp**: time when the result was locked in the system 
-- **fkUserAdd**: User ID of the user who added the result to the system (foreign key)
-- **competitorMarker**: marker for group competition
-- **expertGroupMarker**: marker for specific expert group
-- **excludeFromResault**: marker for "out of contest" result 
-- **fk_quotaCategory**: quota category for the competition (foreign key)
-- **fk_command**: reference for a team membership (foreign key)
-- **FK_USER_CP**: user ID in the digital platform (foreign key)
-- **ACCESS_RKC**: whether the regional competition center has access to the record
-- **FK_COMPATRIOT**: reference for compatriot expert ID (foreign key)
-- **organization**: organization represented by the participant
-- **nok**: participation in an independent qualification assessment project (for demonstration exams)
-- **participant_updated_at**: time of last record update
-- **is_requested**: field for access in the business process
-- **is_accepted**: field for access in the business process
-- **mark700**: 700-point scale
-
-### Note on 500- and 700-scale marks
+<!-- ### Note on 500- and 700-scale marks
 
 The conversion of 100-scale marks into 500-scale (outdated in 2017, 700-scale is used since 2019) marks in the Competition Information System (CIS) serves a crucial purpose in the context of WorldSkills competitions. This conversion allows for a more precise and consistent assessment of competitors' skills across a wide range of skill areas.
 
@@ -73,12 +45,13 @@ The conversion of 100-scale marks into 500-scale (outdated in 2017, 700-scale is
 
 In essence, the conversion to a 500-scale mark in the CIS system ensures that the assessment process is fair, consistent, and capable of providing more nuanced feedback to competitors. It's an integral part of maintaining the high standards and integrity of WorldSkills competitions.
 
-It's also worth noting that 500 (700) scale scores are mathematically dependent on the scores of all competitors in all skills within a given competition, and therefore cannot be used to compare scores across competitions.
+It's also worth noting that 500 (700) scale scores are mathematically dependent on the scores of all competitors in all skills within a given competition, and therefore cannot be used to compare scores across competitions. -->
 
 ### Matching provided data with posed questions
 
 This dataset can be used to perform statistical analyses that will help provide evidence and insights into the impact of various factors on competitors' performance and whether these effects are statistically significant:
 
+<!-- 
 #### Does the regional training system have a significant impact on the competitor's performance?
 
 Just as in Olympic competition - different teams have different approaches to the training systems of their competitors, which can have a significant impact on their performance in competition.
@@ -93,9 +66,11 @@ It is worth noting that during competition events, all competitors must have a c
 
 Another scenario is the demonstration exams, which is not a competition itself and therefore participants don't have a compatriot experts so all results are assessed but group of independent experts which are not affiliated with the college.
 
+-->
+
 #### Whether repeated participation in competitions significantly improves a competitor's average score?
 
-In Russia there are different levels for local WorldSkills competitions:
+WorldSkills Russia have different levels for local WorldSkills competitions:
 
 - Regional competitions among regional colleges
 - National competitions among regions
@@ -117,19 +92,100 @@ To explore this, we can group competitors by the presence of a compatriot expert
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
 
-The foremost step is to perform exporatory data analysis:
-
-- take a brief look at the raw data
-- transform dataset in the more convenient way for exploration purposes
-- clean up observations which are missing important values for analysis
-
-### Exploring raw data
-
 Raw data is provided as three XLSX tables:
 
 - participants100.xlsx
 - participants200.xlsx
 - participants300.xlsx
+
+The total number of observations in the three spreadsheets is 600 000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
+
+Below is a table with the name and description of the original variables, an indication of whether the variable will be used in the final dataset and an indication of the new name (if applicable): 
+
+|Variable name|Renamed to|Comment from owner|Will be used|
+|---|---|---|---|
+|**pk_participant**|result|ID of competition result record (primary key)|Yes|
+|**fkUsers**|competitor|competitor reference (foreign key)|Yes|
+|**fkChamp**|competition|competition event reference (foreign key)|Yes|
+|**fkComp**|skill|skill trade reference (foreign key)|Yes|
+|**ChampRole**|-|ID of the participant's role at the competition |No|
+|**regionID**|region|code of participant's region origin |Yes|
+|**mark100**|mark100|100-point scale|Yes|
+|**mark500**|mark500|500-point scale|Yes|
+|**medal**|medal|type of medal awarded|Yes|
+|**timestamp**|timestamp|time when the result was locked in the system |Yes|
+|**fkUserAdd**|-|User ID of the user who added the result to the system (foreign key)|No|
+|**competitorMarker**|-|marker for group competition|No|
+|**expertGroupMarker**|-|marker for specific expert group|No|
+|**excludeFromResault**|-|marker for "out of contest" result |No|
+|**fk_quotaCategory**|-|quota category for the competition (foreign key)|No|
+|**fk_command**|team|reference for a team membership (foreign key)|Yes|
+|**FK_USER_CP**|-|user ID in the digital platform (foreign key)|No|
+|**ACCESS_RKC**|-|whether the regional competition center has access to the record|No|
+|**FK_COMPATRIOT**|expert|reference for compatriot expert ID (foreign key)|Yes|
+|**organization**|-|organization represented by the participant|No|
+|**nok**|-|participation in an independent qualification assessment project (for demonstration exams)|No|
+|**participant_updated_at**|-|time of last record update|No|
+|**is_requested**|-|field for access in the business process|No|
+|**is_accepted**|-|field for access in the business process|No|
+|**mark700**|-|700-point scale|No|
+
+Detailed customization steps are described in Apendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
+
+```R
+> glimpse(esim_data)
+Rows: 253,080
+Columns: 11
+$ result      <dbl> 305, 307, 308, 315, 316, 320, 322, 343, 353, 354, 355, 369, 370, 371, 372, 3…
+$ competitor  <dbl> 921, 1054, 1055, 856, 1061, 1096, 1098, 700, 705, 708, 703, 1150, 1149, 1151…
+$ competition <dbl> 23, 23, 23, 23, 23, 23, 23, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, …
+$ skill       <dbl> 176, 186, 186, 203, 203, 175, 203, 174, 174, 174, 174, 188, 188, 188, 188, 1…
+$ region      <dbl> 82, 82, 82, 82, 82, 82, 82, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, …
+$ mark100     <dbl> 45.82, 30.25, 26.00, 17.45, 63.25, 44.00, 41.70, 78.80, 74.10, 74.10, 78.80,…
+$ mark500     <dbl> 544, 480, 473, 450, 511, 516, 482, 508, 497, 497, 508, 511, 474, 473, 528, 5…
+$ medal       <chr> "GOLD", NA, NA, NA, "Medallion for Excellence", "BRONZE", NA, "BRONZE", NA, …
+$ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ expert      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+```
+
+Number of unique and missing values for each column is provided below:
+
+```R
+> data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRUE)))),
++            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
+
+            unique missing
+result      253080       0
+competitor  216341       0
+competition  14339       0
+skill          393       0
+region         199       0
+mark100       9505       0
+mark500        262   14544
+medal            5  117367
+timestamp   117755   45628
+team          6021  239617
+expert       27477  204046
+```
+
+
+## Results of the data analysis
+<!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
+
+## Conclusions and recommendations
+<!-- including recommendations for further research -->
+
+## Brief description of the division of work
+<!-- Who is responsible for which part of the report and script -->
+
+## Apendix 1. Customizing the original dataset
+
+The foremost step is to perform initial data analysis to spot useful variables and remove variables with inconsistent or useless values:
+
+- take a brief look at the raw data
+- transform dataset in the more convenient way for exploration purposes
+- clean up observations which are missing important values for analysis
 
 All data operations will be performed using [R language](https://posit.co/download/rstudio-desktop/). 
 
@@ -464,6 +520,7 @@ esim_data <- subset(esim_data,
                                FK_USER_CP,
                                ACCESS_RKC,
                                organization,
+                               nok,
                                excludeFromResault,
                                participant_updated_at,
                                is_requested,
@@ -483,10 +540,8 @@ colnames(esim_data) <- c("result",
                          "mark500", 
                          "medal", 
                          "timestamp", 
-                         "guest", 
                          "team", 
-                         "expert", 
-                         "nok")
+                         "expert")
 ```
 
 So now our dataframe looks more clear and concise:
@@ -502,12 +557,10 @@ $ skill       <dbl> 164, 164, 187, 164, 164, 164, 164, 164, 176, 165, 166, 166, 
 $ region      <dbl> 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 3, 85, 16, 16, ~
 $ mark100     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
 $ mark500     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-$ mark700     <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
 $ medal       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
 $ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
 $ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
 $ expert      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-$ nok         <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
 ```
 
 ### Cleaning up observations
@@ -549,13 +602,3 @@ nrow(esim_data)
 [1] 253080
 ```
 
-Thus, our final dataset is about 42% of its original size. 
-
-## Results of the data analysis
-<!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
-
-## Conclusions and recommendations
-<!-- including recommendations for further research -->
-
-## Brief description of the division of work
-<!-- Who is responsible for which part of the report and script -->
