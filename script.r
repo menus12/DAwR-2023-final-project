@@ -1,6 +1,9 @@
 # Setting working directory
 setwd("$pwd/DAwR-2023-final-project")
 
+# Install tidyverse package if not installed
+# install.packages("tidyverse")
+
 # Loading required libraries
 library(readxl)
 library(tidyverse)
@@ -22,11 +25,6 @@ sample <- esim_data[sample(nrow(esim_data), 20), ]
 sample
 
 # Exploring unique values for variables
-
-# How many different values for medals
-length(unique(esim_data$medal))
-# What are the types of medals 
-unique(esim_data$medal)
 
 # How many different values for roles?
 length(unique(esim_data$ChampRole))
@@ -74,6 +72,7 @@ tail(esim_data  %>%
 # Check non-NA unique values for mark700
 length(unique(esim_data$mark700))
 unique(esim_data$mark700) 
+# variable is useless
 
 # Is there any valuable group markers for competitors?
 length(unique(esim_data$competitorMarker))
@@ -95,16 +94,12 @@ esim_data <- subset(esim_data,
                                FK_USER_CP,
                                ACCESS_RKC,
                                organization,
+                               nok,
                                excludeFromResault,
                                participant_updated_at,
                                is_requested,
                                is_accepted,
                                mark700))
-
-
-
-# Moving mark700 column after mark500 for convenience
-esim_data <- esim_data %>% relocate(mark700, .after = mark500)
 
 # Renaming some of the columns for convenience
 colnames(esim_data) <- c("result", 
@@ -117,8 +112,7 @@ colnames(esim_data) <- c("result",
                          "medal", 
                          "timestamp", 
                          "team", 
-                         "expert", 
-                         "nok")
+                         "expert")
 
 glimpse(esim_data)
 
@@ -138,3 +132,7 @@ length(unique(esim_data$result)) == nrow(esim_data)
 esim_data <- distinct(esim_data)
 length(unique(esim_data$result)) == nrow(esim_data)
 nrow(esim_data)
+
+# How many unique and missing values for each column?
+data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRUE)))),
+           missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
