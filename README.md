@@ -139,7 +139,7 @@ It's often the case that a particular region has same designated expert for a pa
 
 To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
 
-Outcome Variable: Average results of competitors (average grade/mark)
+Outcome Variable: Average results of competitors (average grade/mark)  
 Predictor Variable: A variable representing the presence/absence of a compatriot expert who participated in multiple competitions.
 
 ## Description of the data used
