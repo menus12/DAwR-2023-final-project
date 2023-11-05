@@ -1,5 +1,18 @@
 ## Preface
 <!-- Optional, the preface is not about the subject -->
+An analysis of WorldSkills Russia 
+competition events 
+and demonstration exams
+
+By  Aleksandr Gorbachev & David Langeveld  
+
+
+A Research Paper  
+Submitted to the lecturer of the subject ‘Programming with R’  
+The Hague University of Applied Sciences PRO  
+Master of Business Administration  
+MBA Big Data Analytics  
+November 2023
 
 ## Abstract
 <!-- Contains the purpose of the research carried out, the research questions that are dealt with, the research method and the most important findings -->
@@ -9,11 +22,9 @@
 ## Introduction
 <!-- An introductory chapter in which the purpose and design of the (sub)study is explained and in which the research questions are described -->
 
-TEST to commit changes!
-
 [WorldSkills International](https://worldskills.org/) is a global organization dedicated to promoting excellence in vocational and technical education. It brings together young professionals from around the world to compete in skill-based competitions that showcase their talents and expertise in a wide range of fields, from engineering and technology to hospitality and creative arts. These competitions are assessed by a panel of expert judges who rigorously evaluate participants' performance, measuring their precision, creativity, and adherence to international industry standards.
 
-[WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge for govern and oversee that national and regional competition events are comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
+[WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge to govern and oversee that national and regional competition events comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
 <!-- These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade. -->
 
@@ -26,12 +37,42 @@ Current research is targeted to explore and analyze data from WorldSkills Russia
 - Whether repeated participation in competitions significantly improves a competitor's average score?
 - Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
 
+These questions are formulated as followed:
+
+1. Impact of repeated participation on competitor's average score.
+
+_null hypothesis (h0):  
+The repeated participation in WorldSkills competitions does not significantly improve a competitor's average score._   
+
+_alternative hypothesis (h1):  
+The repeated participation in WorldSkills competitions significantly improves a competitor's average score._
+
+2. Effect of repeated participation of a compatriot expert on competitor results
+
+_null hypothesis (h0):  
+The repeated participation of a compatriot expert does not significantly improve his/her competitor's (average) results in the competitions of WorldSkills Russia._  
+
+_alternative hypothesis (h1):  
+The repeated participation of a compatriot expert significantly improves his/her compatriot competitor's average results in the competitions of WorldSkills Russia._
+
 ## Operationalization of the research questions
 <!-- Describe the data that will be used and how the questions will be answered on the basis of this data. The data analysis itself is not yet described here. So do tell ‘Data file [X] comes from [Y] and can answer the posed questions because [Z]’, but do not yet describe the data itself -->
 
 Each competition event uses the Competition Information System (CIS) to record competition results. A separate instance of CIS is used for each event, so all event results are stored in a separate database instance. In order to have an overview of all competition events, WorldSkills Russia has developed its own aggregation system called Electronic System for Internet Monitoring (eSIM).
 
-The raw data used for this research was kindly provided by the autonomous non-profit organisation "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
+The raw data used for this research was kindly provided by the autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
+
+The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
+- Data preparation  
+- Data cleaning
+- Calculate initial summary statistics  
+- Calculate the average scores of competitors  
+  --> for each competitor, calculate the average score across competitions they have participated in  
+  --> group the data by competitors and then calculate the mean of the marks for each group  
+- Asses the impact of repeated participation
+- Examine the influence of compatriot experts  
+  --> analyze whether the presence of a compatriot expert has a significant impact on the competitor's average scores.  
+  --> group competitors by the presence or absence of compatriot experts and compare their average scores  
 
 <!-- ### Note on 500- and 700-scale marks
 
@@ -51,7 +92,11 @@ It's also worth noting that 500 (700) scale scores are mathematically dependent 
 
 ### Matching provided data with posed questions
 
-This dataset can be used to perform statistical analyses that will help provide evidence and insights into the impact of various factors on competitors' performance and whether these effects are statistically significant:
+This dataset can be used to perform statistical analyses that will help provide evidence and insights into the impact of various factors on competitors' performance and whether these effects are statistically significant. To create a linear regression model based on the research questions, it is necessary to identify an outcome (dependent) variable and predictor (independent) variable(s) for each question.  
+
+In mathematical terms this will form an equation, _Y = a + bX_.  
+
+_Y_ is the outcome variable, _X_ will be the predictor, _a_ is represents the intercept and _bX_ represents the slope associated with the predicator variable.
 
 <!-- 
 #### Does the regional training system have a significant impact on the competitor's performance?
@@ -66,7 +111,7 @@ To investigate this, we can compare the average performance of competitors who h
 
 It is worth noting that during competition events, all competitors must have a compatriot expert who should cooperate with other experts to ensure accuracy, transparency and fairness in recording and managing competition results. It is a rule that a compatriot expert can't participate in the evaluation process of his own compatriot, but there might be cases when during conflict situations and dispute resolution compatriot experts should advocate for their compatriot competitors, e.g. when other experts don't give a mark for some aspects due to biased evaluation process description.
 
-Another scenario is the demonstration exams, which is not a competition itself and therefore participants don't have a compatriot experts so all results are assessed but group of independent experts which are not affiliated with the college.
+Another scenario is the demonstration exams, which is not a competition itself and therefore participants don't have a compatriot experts so all results are assessed by a group of independent experts which are not affiliated with the college.
 
 -->
 
@@ -83,13 +128,19 @@ WorldSkills Russia have different levels for local WorldSkills competitions:
 
 So there may be a case where a given competitor participates in a sequence of competitions at different levels (e.g. Regional, National, HiTech, DigitalSkills) or may be a guest competitor in other regional competitions (usually when preparing for National). It's reasonable to assume that the average score of such a competitor should improve each time he/she participates in the next competition.
 
-To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a significant improvement in scores with repeated participation.
+To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a significant improvement in scores with repeated participation.  
+
+Outcome Variable: Competitor's average score in skill competitions (for example the average grade/mark over multiple competitions).  
+Predictor Variable: A variable representing participation (for exmaple 0 for non-repeated participation, 1 for repeated participation).
 
 #### Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
 
 It's often the case that a particular region has same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an avarege competitor should tend to improve over time as well.
 
 To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
+
+Outcome Variable: Average results of competitors (average grade/mark)
+Predictor Variable: A variable representing the presence/absence of a compatriot expert who participated in multiple competitions.
 
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
@@ -100,7 +151,7 @@ Raw data is provided as three XLSX tables:
 - participants200.xlsx
 - participants300.xlsx
 
-The total number of observations in the three spreadsheets is 600 000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
+The total number of observations in the three spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
 
 Below is a table with the name and description of the original variables, an indication of whether the variable will be used in the final dataset and an indication of the new name (if applicable): 
 
@@ -132,7 +183,7 @@ Below is a table with the name and description of the original variables, an ind
 |**is_accepted**|-|field for access in the business process|No|
 |**mark700**|-|700-point scale|No|
 
-Detailed customization steps are described in Apendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
+Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
 
 ```R
 > glimpse(esim_data)
@@ -181,7 +232,7 @@ expert       27477  204046
 ## Brief description of the division of work
 <!-- Who is responsible for which part of the report and script -->
 
-## Apendix 1. Customizing the original dataset
+## Appendix 1. Customizing the original dataset
 
 The foremost step is to perform initial data analysis to spot useful variables and remove variables with inconsistent or useless values:
 
