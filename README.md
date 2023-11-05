@@ -9,6 +9,8 @@
 ## Introduction
 <!-- An introductory chapter in which the purpose and design of the (sub)study is explained and in which the research questions are described -->
 
+TEST to commit changes!
+
 [WorldSkills International](https://worldskills.org/) is a global organization dedicated to promoting excellence in vocational and technical education. It brings together young professionals from around the world to compete in skill-based competitions that showcase their talents and expertise in a wide range of fields, from engineering and technology to hospitality and creative arts. These competitions are assessed by a panel of expert judges who rigorously evaluate participants' performance, measuring their precision, creativity, and adherence to international industry standards.
 
 [WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge for govern and oversee that national and regional competition events are comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
