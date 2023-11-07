@@ -64,7 +64,7 @@ The raw data used for this research was kindly provided by the autonomous non-pr
 The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
 - Data preparation  
 - Data cleaning
-- Calculate initial summary statistics  
+- (!pending results!) Calculate initial summary statistics  
 - Calculate the average scores of competitors  
   --> for each competitor, calculate the average score across competitions they have participated in  
   --> group the data by competitors and then calculate the mean of the marks for each group  
