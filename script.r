@@ -136,3 +136,49 @@ nrow(esim_data)
 # How many unique and missing values for each column?
 data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRUE)))),
            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
+
+# Here probably we should have some 
+# intermediate calculations like summary 
+# statistics (if any) and so on
+
+# Framing a table with frequency of competitor IDs
+n_occur <- data.frame(table(esim_data$competitor))
+
+# Subsetting results with only those competitor IDs who participated more than 1 time
+comp_repeat <- esim_data %>% filter(competitor %in% n_occur[n_occur$Freq > 1, ]$Var1)
+
+# Ordering data frame by competitor ID and then by result ID
+comp_repeat <- comp_repeat[with(comp_repeat, order(competitor, result)), ]
+
+# Adding a column and computing the boolean value whether each next result is higher than previous
+# If this is a first result of a given competitor, value is NA
+# If this is not first result of a given competitor, and mark100 value is higher than previous mark100 value, than value is TRUE
+# If this is not first result of a given competitor, and mark100 value is lower than previous mark100 value, than value is FALSE
+comp_repeat$improve <- with(comp_repeat, 
+       ifelse(competitor == lag(competitor), 
+              ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+
+# Ploting geom bar with exclusion of each first result (NA values)
+comp_repeat %>% filter(!is.na(improve)) %>% 
+  ggplot(mapping = aes(x = improve)) + 
+    geom_bar()
+
+# Framing a table with frequency of experts IDs
+e_occur <- data.frame(table(esim_data$expert))
+
+# Subsetting results with only those expert IDs who participated more than 1 time
+expert_repeat <- esim_data %>% filter(expert > 0) %>% filter(expert %in% e_occur[e_occur$Freq > 1, ]$Var1)
+
+# Ordering data frame by expert ID and then by result ID
+expert_repeat <- expert_repeat[with(expert_repeat, order(expert, result)), ]
+
+# Adding a column and computing the boolean value whether each next result is higher than previous
+# If this is a first result of a given expert (compatriot competitor), value is NA
+# If this is not first result of a given expert (compatriot competitor), and mark100 value is higher than previous mark100 value, than value is TRUE
+# If this is not first result of a given expert (compatriot competitor), and mark100 value is lower than previous mark100 value, than value is FALSE
+expert_repeat$improve <- with(expert_repeat, ifelse(expert == lag(expert), ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+
+# Ploting geom bar with exclusion of each first result (NA values)
+expert_repeat %>% filter(!is.na(improve)) %>% 
+  ggplot(mapping = aes(x = improve)) + 
+  geom_bar()
