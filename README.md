@@ -1,8 +1,7 @@
 ## Preface
 <!-- Optional, the preface is not about the subject -->
 An analysis of WorldSkills Russia 
-competition events 
-and demonstration exams
+competition events  
 
 By  Aleksandr Gorbachev & David Langeveld  
 
