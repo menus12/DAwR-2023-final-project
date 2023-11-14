@@ -1,4 +1,4 @@
-﻿code;name_en
+﻿code;regionName
 1;Republic of Adygea
 101;Republic of Adygeya
 4;Republic of Altai
@@ -8,7 +8,6 @@
 3;Republic of Buryatia
 103;Republic of Buryatia
 5;Republic of Dagestan
-80;Donetsk Republic
 180;Donetsk Republic
 6;Republic of Ingushetia
 7;Republic of Kabardino-Balkaria
@@ -20,7 +19,6 @@
 111;Republic of Komi
 82;Republic of Crimea
 182;Republic of Crimea
-81;Lugansk Republic
 181;Lugansk Republic
 12;Republic of Mari El
 13;Republic of Mordovia
@@ -72,7 +70,6 @@
 35;Vologda Oblast
 36;Voronezh region
 136;Voronezh region
-85;Zaporozhye region
 185;Zaporozhye region
 37;Ivanovo region
 38;Irkutsk region
@@ -137,7 +134,6 @@
 172;Tyumen region
 73;Ulyanovsk region
 173;Ulyanovsk region
-84;Kherson Oblast
 184;Kherson Oblast
 74;Chelyabinsk Oblast
 174;Chelyabinsk Oblast
@@ -156,7 +152,7 @@
 78;St. Petersburg
 98;St. Petersburg
 178;St. Petersburg
-198;St Petersburg
+198;St. Petersburg
 92;Sevastopol
 192;Sevastopol
 79;Jewish Autonomous Region
