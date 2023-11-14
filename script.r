@@ -1,3 +1,5 @@
+# ------------ Appendix 1. Customizing the original dataset
+
 # Setting working directory
 setwd("$pwd/DAwR-2023-final-project")
 
@@ -133,6 +135,19 @@ esim_data <- distinct(esim_data)
 length(unique(esim_data$result)) == nrow(esim_data)
 nrow(esim_data)
 
+# Load dataframe with region names
+regions <- read_csv2("Datafiles/regions.csv")
+glimpse(regions)
+# there are 168 region codes
+
+# Join region names column to the resulting data frame
+esim_data <- inner_join(esim_data, regions, by = c("region" = "code"), na_matches = "na", relationship = "many-to-many")
+
+# ------------ Description of the data used
+
+# Resulting dataset overview
+glimpse(esim_data)
+
 # How many unique and missing values for each column?
 data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRUE)))),
            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
@@ -140,6 +155,8 @@ data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRU
 # Here probably we should have some 
 # intermediate calculations like summary 
 # statistics (if any) and so on
+
+# ------------ Results of the data analysis
 
 # Framing a table with frequency of competitor IDs
 n_occur <- data.frame(table(esim_data$competitor))
@@ -150,18 +167,37 @@ comp_repeat <- esim_data %>% filter(competitor %in% n_occur[n_occur$Freq > 1, ]$
 # Ordering data frame by competitor ID and then by result ID
 comp_repeat <- comp_repeat[with(comp_repeat, order(competitor, result)), ]
 
-# Adding a column and computing the boolean value whether each next result is higher than previous
+# Adding a column and computing the boolean value whether each next result is higher than previous (absolute score)
 # If this is a first result of a given competitor, value is NA
 # If this is not first result of a given competitor, and mark100 value is higher than previous mark100 value, than value is TRUE
 # If this is not first result of a given competitor, and mark100 value is lower than previous mark100 value, than value is FALSE
-comp_repeat$improve <- with(comp_repeat, 
-       ifelse(competitor == lag(competitor), 
-              ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+comp_repeat$improve100 <- with(comp_repeat, 
+                            ifelse(competitor == lag(competitor), 
+                                   ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
 
-# Ploting geom bar with exclusion of each first result (NA values)
-comp_repeat %>% filter(!is.na(improve)) %>% 
-  ggplot(mapping = aes(x = improve)) + 
-    geom_bar()
+# Ploting geom bar grouping repeated competitor participation cases by region
+# with exclusion of 
+# each first result (NA values)
+# results without experts (NA or 0)
+comp_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% filter(expert > 0) %>% 
+  ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
+  geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
+  labs(title = "Repeated competitor participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
+  scale_fill_manual(labels = c("False", "True"), values = c("red", "green")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))
+
+# Ploting summary geom bar 
+# with exclusion of 
+# each first result (NA values)
+# results without experts (NA or 0)
+comp_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% filter(expert > 0) %>% 
+  ggplot(mapping = aes(x = improve100)) + 
+  geom_bar() +
+  labs(title = "Repeated competitor participation\n", x = "Result has been improved", y = "Number of repeated participations") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
 
 # Framing a table with frequency of experts IDs
 e_occur <- data.frame(table(esim_data$expert))
@@ -176,9 +212,24 @@ expert_repeat <- expert_repeat[with(expert_repeat, order(expert, result)), ]
 # If this is a first result of a given expert (compatriot competitor), value is NA
 # If this is not first result of a given expert (compatriot competitor), and mark100 value is higher than previous mark100 value, than value is TRUE
 # If this is not first result of a given expert (compatriot competitor), and mark100 value is lower than previous mark100 value, than value is FALSE
-expert_repeat$improve <- with(expert_repeat, ifelse(expert == lag(expert), ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+expert_repeat$improve100 <- with(expert_repeat, ifelse(expert == lag(expert), ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+
+# Ploting geom bar grouping repeated expert participation cases by region
+# with exclusion of 
+# each first result (NA values)
+expert_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% 
+  ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
+  geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
+  labs(title = "Repeated expert participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
+  scale_fill_manual(labels = c("False", "True"), values = c("red", "green")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))
 
 # Ploting geom bar with exclusion of each first result (NA values)
-expert_repeat %>% filter(!is.na(improve)) %>% 
-  ggplot(mapping = aes(x = improve)) + 
-  geom_bar()
+expert_repeat %>% filter(!is.na(improve100)) %>% 
+  ggplot(mapping = aes(x = improve100)) + 
+  geom_bar() +
+  labs(title = "Repeated expert participation\n", x = "Result has been improved", y = "Number of repeated participations") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
