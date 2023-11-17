@@ -63,8 +63,13 @@ The raw data used for this research was kindly provided by the autonomous non-pr
 
 The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
 - Data preparation  
-- Data cleaning
-- (!pending results!) Calculate initial summary statistics  
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dlb_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
+    
+- Data importing  
+The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration.
+- 
+- (!pending results!) Calculate initial summary statistics
+- 
 - Calculate the average scores of competitors  
   --> for each competitor, calculate the average score across competitions they have participated in  
   --> group the data by competitors and then calculate the mean of the marks for each group  
