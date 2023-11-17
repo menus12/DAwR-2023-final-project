@@ -68,7 +68,7 @@ The following steps will make sure to operationalize the data so that the resear
 - Calculate the average scores of competitors  
   --> for each competitor, calculate the average score across competitions they have participated in  
   --> group the data by competitors and then calculate the mean of the marks for each group  
-- Asses the impact of repeated participation
+- Assess the impact of repeated participation
 - Examine the influence of compatriot experts  
   --> analyze whether the presence of a compatriot expert has a significant impact on the competitor's average scores.  
   --> group competitors by the presence or absence of compatriot experts and compare their average scores  
@@ -95,7 +95,7 @@ This dataset can be used to perform statistical analyses that will help provide 
 
 In mathematical terms this will form an equation, _Y = a + bX_.  
 
-_Y_ is the outcome variable, _X_ will be the predictor, _a_ is represents the intercept and _bX_ represents the slope associated with the predicator variable.
+_Y_ is the outcome variable, _X_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
 
 <!-- 
 #### Does the regional training system have a significant impact on the competitor's performance?
@@ -130,11 +130,11 @@ So there may be a case where a given competitor participates in a sequence of co
 To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a significant improvement in scores with repeated participation.  
 
 Outcome Variable: Competitor's average score in skill competitions (for example the average grade/mark over multiple competitions).  
-Predictor Variable: A variable representing participation (for exmaple 0 for non-repeated participation, 1 for repeated participation).
+Predictor Variable: A variable representing participation (for example 0 for non-repeated participation, 1 for repeated participation).
 
 #### Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
 
-It's often the case that a particular region has same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an avarege competitor should tend to improve over time as well.
+It's often the case that a particular region has the same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an average competitor should tend to improve over time as well.
 
 To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
 
