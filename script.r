@@ -153,30 +153,34 @@ data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRU
            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
 
 # Summary of Grouped Regions (removed NA values)
-# check summary statistics of mark100 per grouped region
-summary_by_region <- esim_data %>%
-  group_by(region) %>%
+# Check summary statistics of mark100 per grouped region
+summary_by_regionName <- esim_data %>%
+  group_by(regionName) %>%
   summarise(
     count = n(),                   # Count of observations
     mean_mark100 = mean(mark100),  # Mean of mark100
     median_mark100 = median(mark100),  # Median of mark100
     sd_mark100 = sd(mark100),      # Standard deviation of mark100
     avg_mark100 = mean(mark100)    # Average of mark100
-    # Add more summary statistics as needed
-  )
+summary_by_regionName
 
+# Sort table by count of observations, most observations per region at the top
+View(summary_by_region_sorted)
+summary_by_region_sorted <- summary_by_regionName %>%
+  arrange(desc(count))         
+         
 # Filter the top 10 regions in terms of observations (count)
 top_regions <- esim_data %>%
-  group_by(region) %>%
+  group_by(regionName) %>%
   summarise(count = n()) %>%
   top_n(10, wt = count) %>%
-  pull(region)
+  pull(regionName)
 
 # Filter the dataset for the top 10 regions
-filtered_data_top10 <- esim_data %>% filter(region %in% top_regions)
+filtered_data_top10 <- esim_data %>% filter(regionName %in% top_regions)
 
 # Create a boxplot to visualize 'mark100' for the top 10 regions
-ggplot(filtered_data_top10, aes(x = as.factor(region), y = mark100)) +
+ggplot(filtered_data_top10, aes(x = as.factor(regionName), y = mark100)) +
   geom_boxplot() +
   labs(title = "Boxplot of 'mark100' for Top 10 Regions",
        x = "Region",
