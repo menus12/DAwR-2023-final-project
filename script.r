@@ -10,6 +10,7 @@ setwd("$pwd/DAwR-2023-final-project")
 library(readxl)
 library(tidyverse)
 library(readr)
+library(skimr)
 
 # Loading excel sheets 
 frame1 <- read_excel("Datafiles/participants100.xlsx")
@@ -154,6 +155,7 @@ data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRU
 
 # Summary of Grouped Regions (removed NA values)
 # Check summary statistics of mark100 per grouped region
+                          
 summary_by_regionName <- esim_data %>%
   group_by(regionName) %>%
   summarise(
