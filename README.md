@@ -25,7 +25,7 @@ November 2023
 
 [WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge to govern and oversee that national and regional competition events comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
-<!-- These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade. -->
+These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade.  
 
 Current research is targeted to explore and analyze data from WorldSkills Russia competition events and demonstration exams to answer following questions:
 
@@ -61,19 +61,21 @@ Each competition event uses the Competition Information System (CIS) to record c
 
 The raw data used for this research was kindly provided by the autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
 
-The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:z
+The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
 
 - Data importing  
-The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset has been joined to give context to the region codes.  
+The supplied datasets (participants datafiles) are subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The wrangled dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset (regions datafile) has been joined to give context to the region codes in the main dataset.  
 
 - Data preparation  
-Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit. This will help in the dissection of the dataset.
     
-- Compute summary statistics
-As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analaysis will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a region standpoint.  
+- Compute summary statistics & further analysis  
+As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analaysis (EDA) will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a region point of view. Calculating the summary with the initial dataset was not possible as many observations where invalid or missing, for example from the original 600.000 number of rows, there where mssing values in 250.734 of them. Cleaning the data beforehand made sure the data is of high enough quality to execute EDA.
 
-- Analysis whether repeated participation in competitions significantly improves a competitor's average score?
-- Analysis whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?  
+The skim() output reports summaries for categorical variables (variable type: factor) separately from the numerical variables (variable type:numeric). For the categorical variable "region", it reports the following information: skim_variable, n_missing, complete_rate, ordered (Y/N), and n_unique, which are the number of missing, complete rate, if it's ordered or not, and total number of values.  
+
+These steps make sure the dataset is understandable, cleaned and prepared for exploration so the communication regarding the key results can be done to a broad audience.  
+
    
 <!-- ### Note on 500- and 700-scale marks
 
