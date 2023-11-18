@@ -187,6 +187,13 @@ Below is a table with the name and description of the original variables, an ind
 |**is_accepted**|-|field for access in the business process|No|
 |**mark700**|-|700-point scale|No|
 
+Regions dataset:
+|Variable name|Renamed to|Comment from owner|Will be used|
+|---|---|---|---|
+|**code**|code|Code of region (primary key)|Yes|
+|**regionName**|regionName|Name of Region reference (foreign key)|Yes|
+
+
 Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
 
 ```R
