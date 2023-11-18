@@ -63,12 +63,16 @@ The raw data used for this research was kindly provided by the autonomous non-pr
 
 The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
 - Data preparation  
-- Data cleaning
-- (!pending results!) Calculate initial summary statistics  
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dlb_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
+    
+- Data importing  
+The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration.  
+
+- (!pending results!) Calculate initial summary statistics
 - Calculate the average scores of competitors  
   --> for each competitor, calculate the average score across competitions they have participated in  
   --> group the data by competitors and then calculate the mean of the marks for each group  
-- Asses the impact of repeated participation
+- Assess the impact of repeated participation
 - Examine the influence of compatriot experts  
   --> analyze whether the presence of a compatriot expert has a significant impact on the competitor's average scores.  
   --> group competitors by the presence or absence of compatriot experts and compare their average scores  
@@ -95,7 +99,7 @@ This dataset can be used to perform statistical analyses that will help provide 
 
 In mathematical terms this will form an equation, _Y = a + bX_.  
 
-_Y_ is the outcome variable, _X_ will be the predictor, _a_ is represents the intercept and _bX_ represents the slope associated with the predicator variable.
+_Y_ is the outcome variable, _X_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
 
 <!-- 
 #### Does the regional training system have a significant impact on the competitor's performance?
@@ -130,11 +134,11 @@ So there may be a case where a given competitor participates in a sequence of co
 To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a significant improvement in scores with repeated participation.  
 
 Outcome Variable: Competitor's average score in skill competitions (for example the average grade/mark over multiple competitions).  
-Predictor Variable: A variable representing participation (for exmaple 0 for non-repeated participation, 1 for repeated participation).
+Predictor Variable: A variable representing participation (for example 0 for non-repeated participation, 1 for repeated participation).
 
 #### Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
 
-It's often the case that a particular region has same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an avarege competitor should tend to improve over time as well.
+It's often the case that a particular region has the same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an average competitor should tend to improve over time as well.
 
 To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
 
