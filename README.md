@@ -61,22 +61,20 @@ Each competition event uses the Competition Information System (CIS) to record c
 
 The raw data used for this research was kindly provided by the autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
 
-The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
-- Data preparation  
-Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dlb_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
-    
+The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:z
+
 - Data importing  
-The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration.  
+The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset has been joined to give context to the region codes.  
 
-- (!pending results!) Calculate initial summary statistics
-- Calculate the average scores of competitors  
-  --> for each competitor, calculate the average score across competitions they have participated in  
-  --> group the data by competitors and then calculate the mean of the marks for each group  
-- Assess the impact of repeated participation
-- Examine the influence of compatriot experts  
-  --> analyze whether the presence of a compatriot expert has a significant impact on the competitor's average scores.  
-  --> group competitors by the presence or absence of compatriot experts and compare their average scores  
+- Data preparation  
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
+    
+- Compute summary statistics
+As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analaysis will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a region standpoint.  
 
+- Analysis whether repeated participation in competitions significantly improves a competitor's average score?
+- Analysis whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?  
+   
 <!-- ### Note on 500- and 700-scale marks
 
 The conversion of 100-scale marks into 500-scale (outdated in 2017, 700-scale is used since 2019) marks in the Competition Information System (CIS) serves a crucial purpose in the context of WorldSkills competitions. This conversion allows for a more precise and consistent assessment of competitors' skills across a wide range of skill areas.
@@ -148,13 +146,14 @@ Predictor Variable: A variable representing the presence/absence of a compatriot
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
 
-Raw data is provided as three XLSX tables:
+Raw data is provided as four XLSX tables:
 
 - participants100.xlsx
 - participants200.xlsx
 - participants300.xlsx
+- regions.xlsx
 
-The total number of observations in the three spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
+The total number of observations in the three participant spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
 
 Below is a table with the name and description of the original variables, an indication of whether the variable will be used in the final dataset and an indication of the new name (if applicable): 
 
