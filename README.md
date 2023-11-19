@@ -25,7 +25,7 @@ November 2023
 
 [WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge to govern and oversee that national and regional competition events comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
-<!-- These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade. -->
+These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade.  
 
 Current research is targeted to explore and analyze data from WorldSkills Russia competition events and demonstration exams to answer following questions:
 
@@ -62,21 +62,21 @@ Each competition event uses the Competition Information System (CIS) to record c
 The raw data used for this research was kindly provided by the autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
 
 The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
-- Data preparation  
-Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dlb_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit.
-    
+
 - Data importing  
-The supplied dataset was subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The altered dataset resulted in a more focused dataframe which could be used for exploration.  
+The supplied datasets (participants datafiles) are subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The wrangled dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset (regions datafile) has been joined to give context to the region codes in the main dataset.  
 
-- (!pending results!) Calculate initial summary statistics
-- Calculate the average scores of competitors  
-  --> for each competitor, calculate the average score across competitions they have participated in  
-  --> group the data by competitors and then calculate the mean of the marks for each group  
-- Assess the impact of repeated participation
-- Examine the influence of compatriot experts  
-  --> analyze whether the presence of a compatriot expert has a significant impact on the competitor's average scores.  
-  --> group competitors by the presence or absence of compatriot experts and compare their average scores  
+- Data preparation  
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit. This will help in the dissection of the dataset.
+    
+- Compute summary statistics & further analysis  
+As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analaysis (EDA) will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a region point of view. Calculating the summary with the initial dataset was not possible as many observations where invalid or missing, for example from the original 600.000 number of rows, there where mssing values in 250.734 of them. Cleaning the data beforehand made sure the data is of high enough quality to execute EDA.
 
+The skim() output reports summaries for categorical variables (variable type: factor) separately from the numerical variables (variable type:numeric). For the categorical variable "region", it reports the following information: skim_variable, n_missing, complete_rate, ordered (Y/N), and n_unique, which are the number of missing, complete rate, if it's ordered or not, and total number of values.  
+
+These steps make sure the dataset is understandable, cleaned and prepared for exploration so the communication regarding the key results can be done to a broad audience.  
+
+   
 <!-- ### Note on 500- and 700-scale marks
 
 The conversion of 100-scale marks into 500-scale (outdated in 2017, 700-scale is used since 2019) marks in the Competition Information System (CIS) serves a crucial purpose in the context of WorldSkills competitions. This conversion allows for a more precise and consistent assessment of competitors' skills across a wide range of skill areas.
@@ -148,13 +148,14 @@ Predictor Variable: A variable representing the presence/absence of a compatriot
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
 
-Raw data is provided as three XLSX tables:
+Raw data is provided as four XLSX tables:
 
 - participants100.xlsx
 - participants200.xlsx
 - participants300.xlsx
+- regions.xlsx
 
-The total number of observations in the three spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
+The total number of observations in the three participant spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
 
 Below is a table with the name and description of the original variables, an indication of whether the variable will be used in the final dataset and an indication of the new name (if applicable): 
 
@@ -185,6 +186,27 @@ Below is a table with the name and description of the original variables, an ind
 |**is_requested**|-|field for access in the business process|No|
 |**is_accepted**|-|field for access in the business process|No|
 |**mark700**|-|700-point scale|No|
+
+Regions dataset:
+|Variable name|Renamed to|Comment from owner|Will be used|
+|---|---|---|---|
+|**code**|code|Code of region (primary key)|Yes|
+|**regionName**|regionName|Name of Region reference (foreign key)|Yes|  
+
+As discussed earlier, the following steps where taken in the form of exploratory data analysis: importing, preparing in the form of wrangling and tidying, computing summary statistics and analysis.  
+
+The importing, preparation of the data, and the function that have been used for summary statistics are noted in the Appendix 1 and in the included script.
+
+Computing the summary statistics of the top 10 regions in terms of observations resulted in the following Boxplot:
+
+The steps taken are as followed:
+- join dataset with region names to the main dataset that has the codes
+- group by region
+- calculate summary statistics including the mean, median
+  ![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/bc02dcc5-f4dc-42e5-a901-a3f123309ce7)
+- sort table by count of observations and filter the top 10 regions
+- visualise in a boxplot
+![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/a7735b3b-8bf8-4b49-ac88-0448513a87e5)
 
 Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
 
@@ -228,6 +250,16 @@ expert       27477  204046
 
 ## Results of the data analysis
 <!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
+
+
+
+
+
+
+
+
+
+
 
 ## Conclusions and recommendations
 <!-- including recommendations for further research -->
