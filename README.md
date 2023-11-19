@@ -67,10 +67,10 @@ The following steps will make sure to operationalize the data so that the resear
 The supplied datasets (participants datafiles) are subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The wrangled dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset (regions datafile) has been joined to give context to the region codes in the main dataset.  
 
 - Data preparation  
-Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encounterd in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identity each observational unit in case of competitors. The other variables describe the properties of each observational unit. This will help in the dissection of the dataset.
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encountered in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identify each observational unit in case of competitors. The other variables describe the properties of each observational unit. This will help in the dissection of the dataset.
     
 - Compute summary statistics & further analysis  
-As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analaysis (EDA) will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a region point of view. Calculating the summary with the initial dataset was not possible as many observations where invalid or missing, for example from the original 600.000 number of rows, there where mssing values in 250.734 of them. Cleaning the data beforehand made sure the data is of high enough quality to execute EDA.
+As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analysis (EDA) will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a regional point of view. Calculating the summary with the initial dataset was not possible as many observations were invalid or missing, for example from the original 600.000 number of rows, there were missing values in 250.734 of them. Cleaning the data beforehand made sure the data is of high enough quality to execute EDA.
 
 The skim() output reports summaries for categorical variables (variable type: factor) separately from the numerical variables (variable type:numeric). For the categorical variable "region", it reports the following information: skim_variable, n_missing, complete_rate, ordered (Y/N), and n_unique, which are the number of missing, complete rate, if it's ordered or not, and total number of values.  
 
@@ -99,7 +99,7 @@ This dataset can be used to perform statistical analyses that will help provide 
 
 In mathematical terms this will form an equation, _Y = a + bX_.  
 
-_Y_ is the outcome variable, _X_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
+_Y_ is the outcome variable, _x_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
 
 <!-- 
 #### Does the regional training system have a significant impact on the competitor's performance?
@@ -120,7 +120,7 @@ Another scenario is the demonstration exams, which is not a competition itself a
 
 #### Whether repeated participation in competitions significantly improves a competitor's average score?
 
-WorldSkills Russia have different levels for local WorldSkills competitions:
+WorldSkills Russia has different levels for local WorldSkills competitions:
 
 - Regional competitions among regional colleges
 - National competitions among regions
@@ -153,7 +153,7 @@ Raw data is provided as four XLSX tables:
 - participants100.xlsx
 - participants200.xlsx
 - participants300.xlsx
-- regions.xlsx
+
 
 The total number of observations in the three participant spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
 
