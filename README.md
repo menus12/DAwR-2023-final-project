@@ -296,7 +296,7 @@ The foremost step is to perform initial data analysis to spot useful variables a
 
 All data operations will be performed using [R language](https://posit.co/download/rstudio-desktop/). 
 
-First we will load Excel tables into R, merge all tables in single dataframe and look at columns.
+First we will load Excel tables into R, merge all tables in a single dataframe and look at columns.
 
 ```R
 # Loading required libraries
@@ -381,11 +381,11 @@ sample
 #   participant_updated_at <chr>, is_requested <dbl>, is_accepted <dbl>, mark700 <lgl>
 ```
 
-From this sample we see some observations which are falls in our area of interest as well as some value which are missing the most important value ```mark100```, which is a main measure for performance evaluation to be used in all tested hypotesises.
+From this sample we see some observations which fall in our area of interest as well as some value which are missing the most important values ```mark100```, which is a main measure for performance evaluation to be used in all tested hypotheses.
 
 ### Exploring unique values for variables 
 
-Next step is to figure out which values of provided variables might be useful for results explainnation, as well as which variables are useless and can be discarded.
+Next step is to figure out which values of provided variables might be useful for the results explanation, as well as which variables are useless and can be discarded.
 
 Based on raw data samples and provided description from data owner, there are some columns which are:
 
@@ -411,7 +411,7 @@ Based on raw data samples and provided description from data owner, there are so
     - **is_requested**: field for access in the business process
     - **is_accepted**: field for access in the business process
 
-- not clear so it's good to take a closer look to thse values:
+- not clear so it's good to take a closer look to these values:
     - **ChampRole**: ID of the participant's role at the competition 
     - **fk_command**: reference for a team membership (foreign key)
     - **organization**: organization represented by the participant
@@ -454,7 +454,7 @@ unique(esim_data$ChampRole)
 [1]  4  5  1  7  2  3  6 28 29 22 20 30 31 33 34 35  8 36
 ```
 
-There are some identifiers for competition roles for participants (required to be entered in CIS), but since these values might not be consistant across all CIS instances (and therefore inside eSIM), given that we don't have actual values for these identifiers we can easily discard this column.
+There are some identifiers for competition roles for participants (required to be entered in CIS), but since these values might not be consistent across all CIS instances (and therefore inside eSIM), given that we don't have actual values for these identifiers we can easily discard this column.
 
 ---
 
@@ -470,14 +470,14 @@ head(unique(esim_data$fk_command),n = 10)
 [1]  0 21 30 29 28 26 27 33 46 35
 ```
 
-It seems that there are some team identifiers which are linked to another tables. Due to absence of linked table these values are not very useful but we can keep the column to identify whether this is a team or personal result. 
+It seems that there are some team identifiers which are linked to other tables. Due to the absence of linked tables these values are not very useful but we can keep the column to identify whether this is a team or personal result. 
 
 ---
 
 Next, we explore is there any ```organization``` represented by competitors:
 
 ```R
-# How many organizations represented by competitors in the dataset?
+# How many organizations are represented by competitors in the dataset?
 length(unique(esim_data$organization))
 [1] 1
 
@@ -500,12 +500,12 @@ length(unique(esim_data$nok))
 unique(esim_data$nok)
 [1] 0 1
 
-# Is there any results marked with nok=1 identifier?
+# Are there any results marked with nok=1 identifier?
 length(esim_data$nok[esim_data$nok == "1"]) 
 [1] 207
 ```
 
-So we do have at least 207 values which are clearly represent demonstration exams. Note that it's not necesserily that evety DE marked with nok value, but either way it can be useful for future assumptions.
+So we do have at least 207 values which are clearly represent demonstration exams. Note that it's not necessarily that every DE is marked with nok value, but either way it can be useful for future assumptions.
 
 ---
 
@@ -587,7 +587,7 @@ Clearly there are no 700-scale marks, most likely because it was introduced by W
 Next we go over ```competitorMarker``` variable:
 
 ```R
-# Is there any valuable group markers for competitors?
+# Are there any valuable group markers for competitors?
 length(unique(esim_data$competitorMarker))
 [1] 1
 
@@ -599,10 +599,10 @@ Column is empty and can be easily discarded.
 
 ---
 
-Finally, we explore valuses for ```expertGroupMarker``` column:
+Finally, we explore values for ```expertGroupMarker``` column:
 
 ```R
-# Is there any group markers for experts?
+# Are there any group markers for experts?
 length(unique(esim_data$expertGroupMarker))
 [1] 8
 
@@ -610,7 +610,7 @@ unique(esim_data$expertGroupMarker)
 [1] NA     "CERT" "NO"   "Н"    "С"    "N"    "W"    "S"   
 ```
 
-There are some markers which are not really meaningful in context of our research, so this variable can be discarded. 
+There are some markers which are not really meaningful in the context of our research, so this variable can be discarded. 
 
 ### Transforming dataframe for brevity
 
@@ -689,7 +689,7 @@ esim_data <- esim_data %>%
   filter(mark100 > 0)
 ```
 
-To keep observations relevant to stated research questions we need to consider observations with missing data of experts participation, since some of the results might be not from competitions but from demonstration exams, where participants don't have a compatriot expert.
+To keep observations relevant to stated research questions we need to consider observations with missing data of expert participation, since some of the results might be not from competitions but from demonstration exams, where participants don't have a compatriot expert.
 
 ```R
 # How many observations where mark100 is NA?
