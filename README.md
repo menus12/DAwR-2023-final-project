@@ -274,14 +274,15 @@ The regions are not closely related in terms of location, but might share socioe
 
 ## Brief description of the division of work
 <!-- Who is responsible for which part of the report and script -->
-The tasks regarding the report was divided between the two authors of this report, Alex & David.  
-Alex: 
+The tasks regarding the report were divided between the two authors of this report, Alex & David. 
+
+Alex Gorbachev: 
 - Was responsible to getting the dataset from external suppliers related to his work
 - Alex has industry domain knowledge and understood the concepts and structure of the supplied dataset
 - Alex setup the initial draft of the research questions and script of R in Github
 
-David:
-- Was respsonsible as a validation partner of Alex, as he did not have the same level of the domain knowledge
+David Langeveld:  
+- Was responsible as a validation partner of Alex, as he did not have the same level of the domain knowledge
 - Validated the initial draft and script in Github by reviewing all steps taken, came up with suggestions and additions where necessary
 - Wrote the initial draft of the research paper
 
