@@ -226,26 +226,27 @@ cg %>% ggplot(aes(x = results, y = mean_score100)) +
   geom_smooth(method = "lm", se = FALSE)
 
 # Fit regression model
-model <- lm(mean_score100 ~ results, data = cg)
+c_model <- lm(mean_score100 ~ results, data = cg)
 # Get regression table
-get_regression_table(model)
+get_regression_table(c_model)
 
 # Building Null Distribution
-null_distribution <- cg %>% 
+null_distribution_q1 <- cg %>% 
   specify(formula = mean_score100 ~ results) %>% 
   hypothesize(null = "independence") %>% 
   generate(reps = 1000, type = "permute") %>% 
   calculate(stat = "correlation")
 
 # Observation difference proportion
-obs_diff_prop  <- cg %>% 
+obs_diff_prop_q1  <- cg %>% 
   specify(formula = mean_score100 ~ results) %>%
   calculate(stat = "correlation")
 
 # Visualizing null distribution
-visualize(null_distribution, bins = 20) + 
-  shade_p_value(obs_stat = obs_diff_prop, direction = "both")
+visualize(null_distribution_q1, bins = 20) + 
+  shade_p_value(obs_stat = obs_diff_prop_q1, direction = "both")
 
+# ---- How significant this positive impact?
 
 # Framing a table with frequency of competitor IDs
 n_occur <- data.frame(table(esim_data$competitor))
@@ -293,11 +294,53 @@ comp_repeat %>% filter(!is.na(improve100)) %>%
 # ---- Whether repeated participation of a compatriot expert 
 # ---- have a positive impact on his/her compatriot competitors' average results?
 
+# Grouping results by competitors and regions
+eg <- esim_data %>% 
+  group_by(expert, region)  %>% 
+  summarise(results = n(), 
+            mean_score100 = mean(mark100), 
+            max_score100 = max(mark100),
+            min_score100 = min(mark100)) 
+
+# Quick look at the summary 
+eg
+
+# Plotting the linear regression between expert participation count and mean average score 
+eg %>% ggplot(aes(x = results, y = mean_score100)) +
+  geom_jitter(alpha = 0.5) +
+  labs(x = "Participation count", 
+       y = "Mean score",
+       title = "Scatterplot of relationship of repeated experts participation and average scores") + 
+  geom_smooth(method = "lm", se = FALSE)
+
+# Fit regression model
+e_model <- lm(mean_score100 ~ results, data = eg)
+# Get regression table
+get_regression_table(e_model)
+
+# Building Null Distribution
+null_distribution_q2 <- eg %>% 
+  specify(formula = mean_score100 ~ results) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "correlation")
+
+# Observation difference proportion
+obs_diff_prop_q2  <- eg %>% 
+  specify(formula = mean_score100 ~ results) %>%
+  calculate(stat = "correlation")
+
+# Visualizing null distribution
+visualize(null_distribution_q2, bins = 20) + 
+  shade_p_value(obs_stat = obs_diff_prop_q2, direction = "both")
+
+# ---- How significant this positive impact?
+
 # Framing a table with frequency of experts IDs
 e_occur <- data.frame(table(esim_data$expert))
 
 # Subsetting results with only those expert IDs who participated more than 1 time
-expert_repeat <- esim_data %>% filter(expert > 0) %>% filter(expert %in% e_occur[e_occur$Freq > 1, ]$Var1)
+expert_repeat <- esim_data %>% filter(expert %in% e_occur[e_occur$Freq > 1, ]$Var1)
 
 # Ordering data frame by expert ID and then by result ID
 expert_repeat <- expert_repeat[with(expert_repeat, order(expert, result)), ]
@@ -306,12 +349,13 @@ expert_repeat <- expert_repeat[with(expert_repeat, order(expert, result)), ]
 # If this is a first result of a given expert (compatriot competitor), value is NA
 # If this is not first result of a given expert (compatriot competitor), and mark100 value is higher than previous mark100 value, than value is TRUE
 # If this is not first result of a given expert (compatriot competitor), and mark100 value is lower than previous mark100 value, than value is FALSE
-expert_repeat$improve100 <- with(expert_repeat, ifelse(expert == lag(expert), ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+expert_repeat$improve100 <- with(expert_repeat, 
+                              ifelse(expert == lag(expert), 
+                                ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
 
 # Ploting geom bar grouping repeated expert participation cases by region
-# with exclusion of 
-# each first result (NA values)
-expert_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% 
+# with exclusion of each first result (NA values)
+expert_repeat %>% filter(!is.na(improve100)) %>% 
   ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
   geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
   labs(title = "Repeated expert participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
@@ -327,3 +371,9 @@ expert_repeat %>% filter(!is.na(improve100)) %>%
   labs(title = "Repeated expert participation\n", x = "Result has been improved", y = "Number of repeated participations") +
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
+
+# Summarizing proportions
+expert_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
