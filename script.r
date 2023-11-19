@@ -285,12 +285,6 @@ comp_repeat %>% filter(!is.na(improve100)) %>%
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
 
-# Summarizing proportions
-comp_repeat %>% filter(!is.na(improve100)) %>%
-  group_by(improve100) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n)) 
-
 # ---- Whether repeated participation of a compatriot expert 
 # ---- have a positive impact on his/her compatriot competitors' average results?
 
@@ -372,7 +366,15 @@ expert_repeat %>% filter(!is.na(improve100)) %>%
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
 
-# Summarizing proportions
+# ---- Whether repeated participation of a compatriot expert 
+
+# Summarizing proportions for competitors repetitive participation
+comp_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
+
+# Summarizing proportions for expert repetitive participation
 expert_repeat %>% filter(!is.na(improve100)) %>%
   group_by(improve100) %>%
   summarise(n = n()) %>%
