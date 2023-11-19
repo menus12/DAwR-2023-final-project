@@ -69,7 +69,7 @@ In mathematical terms this will form an equation, _Y = a + bX_, where _Y_ is the
 
 #### Does repeated participation in competitions have a positive effect on a competitor's average score?
 
-WorldSkills Russia have different levels for local WorldSkills competitions:
+WorldSkills Russia has different levels for local WorldSkills competitions:
 
 - Regional competitions among regional colleges
 - National competitions among regions
@@ -195,6 +195,11 @@ regionName      86       0
 ### Data summary statistics
 
 After we distinguished a relevant part of observations, the calculation of the summary statistics will be done for mark100 scores from a region point of view.
+
+When analyzing the summary statistics where the top 10 regions in terms of mark100 scores, the following could be noted:  
+- There are some outliers in 5 of the 10 regions, meaning they deviate a bit more from the bulk of the data. These outliers are data points (observations of results) that fall outside the typical range of the values of the dataset.
+- The presence of these outliers can affect the interpretation of the boxplot. The whiskers of the boxplot extend to 1.5 times the interquartile range (IQR) beyond the first and third quartiles.
+- The medians and interquartile ranges (IQR) in the boxplots are all relatively close to each other when compared against regions. It suggests that, on average, the central tendency of the scores (mark100) is similar across the top 10 regions. 
 
 ```R
 summary_by_regionName <- esim_data %>%
@@ -608,8 +613,19 @@ expert_repeat %>% filter(!is.na(improve100)) %>%
 
 ## Conclusions and recommendations
 <!-- including recommendations for further research -->
+Summary statistics
 
-From the above mentioned research we can conclude that both conditions, such as 
+The closeness of the medians implies that, on anverage, people in different regions perform similarly on the test. This could indicate a level of consistency in educational outcomes or test performance across the regions.
+
+It can also suggest that the educational systems or teaching methods in the various regions are providing similar levels of education or that the quality of educaton is relatively consistent across the regions.  
+
+The narrow spread of the median could also mean that the variability in test scores within the region is limited. In other words, there might not be significant differences in individual performance within a given region.  
+
+The presence of outliers in 5 of the 10 regions, even if they don't impact the median in a relative matter against the other regions, may offer further understanding into specific scores of high performance.
+
+The regions are not closely related in terms of location, but might share socioeconomic factors relative to each other. Factors like population income, demography, educational policies could give more sense regarding these relationships.
+
+From the above mentioned research we also can conclude that both conditions, such as 
 
 - repeated competitor participation in WorlSkills Russia competition
 - repeated compatriot expert participation in WorlSkills Russia competition
@@ -629,6 +645,19 @@ Recomendations for future research mmay include:
 
 ## Brief description of the division of work
 <!-- Who is responsible for which part of the report and script -->
+The tasks regarding the report were divided between the two authors of this report, Aleksandr & David. 
+
+Aleksandr Gorbachev: 
+- Was responsible to getting the dataset from external suppliers related to his work
+- Has industry domain knowledge and understood the concepts and structure of the supplied dataset
+- Setup the initial draft of the research questions and script
+- Performed parts of scripting for clean up and wrangling
+
+David Langeveld:  
+- Validated the initial draft and script by reviewing all steps taken, came up with suggestions and additions where necessary
+- Wrote the initial draft of the research paper
+- Implemented summary statistics and respective visualizations
+- Performed parts of scripting for visualizations of respective hypothesis testing
 
 ## Appendix 1. Customizing the original dataset
 
@@ -640,7 +669,7 @@ The foremost step is to perform initial data analysis to spot useful variables a
 
 All data operations will be performed using [R language](https://posit.co/download/rstudio-desktop/). 
 
-First we will load Excel tables into R, merge all tables in single dataframe and look at columns.
+First we will load Excel tables into R, merge all tables in a single dataframe and look at columns.
 
 ```R
 # Loading required libraries
@@ -726,11 +755,11 @@ sample
 #   participant_updated_at <chr>, is_requested <dbl>, is_accepted <dbl>, mark700 <lgl>
 ```
 
-From this sample we see some observations which are falls in our area of interest as well as some value which are missing the most important value ```mark100```, which is a main measure for performance evaluation to be used in all tested hypotesises.
+From this sample we see some observations which fall in our area of interest as well as some value which are missing the most important values ```mark100```, which is a main measure for performance evaluation to be used in all tested hypotheses.
 
 ### Exploring unique values for variables 
 
-Next step is to figure out which values of provided variables might be useful for results explainnation, as well as which variables are useless and can be discarded.
+Next step is to figure out which values of provided variables might be useful for the results explanation, as well as which variables are useless and can be discarded.
 
 Based on raw data samples and provided description from data owner, there are some columns which are:
 
@@ -756,7 +785,7 @@ Based on raw data samples and provided description from data owner, there are so
     - **is_requested**: field for access in the business process
     - **is_accepted**: field for access in the business process
 
-- not clear so it's good to take a closer look to thse values:
+- not clear so it's good to take a closer look to these values:
     - **ChampRole**: ID of the participant's role at the competition 
     - **fk_command**: reference for a team membership (foreign key)
     - **organization**: organization represented by the participant
@@ -764,26 +793,6 @@ Based on raw data samples and provided description from data owner, there are so
     - **excludeFromResault**: marker for "out of contest" result 
     - **competitorMarker**: marker for group competition
     - **expertGroupMarker**: marker for specific expert group
-
-<!-- 
-Let's start from ```medal``` variable:
-
-```R
-# How many different values for medals
-length(unique(esim_data$medal))
-
-[1] 5
-
-# What are the types of medals 
-unique(esim_data$medal)
-
-[1] NA                         "GOLD"                     "Medallion for Excellence"
-[4] "BRONZE"                   "SILVER"   
-```
-
-Here values are clear and represent types of medal awarded to competitors. Note that ```Medallion for Excellence``` is the medal awarded for competitors who are *above the avarage level across all skills within one competition*, e.g. who have score >=500 in ```mark500``` (or >=700 in ```mark700``` since 2019). This variable is clearly useful for analysis.
-
--->
 
 ---
 
@@ -799,7 +808,7 @@ unique(esim_data$ChampRole)
 [1]  4  5  1  7  2  3  6 28 29 22 20 30 31 33 34 35  8 36
 ```
 
-There are some identifiers for competition roles for participants (required to be entered in CIS), but since these values might not be consistant across all CIS instances (and therefore inside eSIM), given that we don't have actual values for these identifiers we can easily discard this column.
+There are some identifiers for competition roles for participants (required to be entered in CIS), but since these values might not be consistent across all CIS instances (and therefore inside eSIM), given that we don't have actual values for these identifiers we can easily discard this column.
 
 ---
 
@@ -815,14 +824,14 @@ head(unique(esim_data$fk_command),n = 10)
 [1]  0 21 30 29 28 26 27 33 46 35
 ```
 
-It seems that there are some team identifiers which are linked to another tables. Due to absence of linked table these values are not very useful but we can keep the column to identify whether this is a team or personal result. 
+It seems that there are some team identifiers which are linked to other tables. Due to the absence of linked tables these values are not very useful but we can keep the column to identify whether this is a team or personal result. 
 
 ---
 
 Next, we explore is there any ```organization``` represented by competitors:
 
 ```R
-# How many organizations represented by competitors in the dataset?
+# How many organizations are represented by competitors in the dataset?
 length(unique(esim_data$organization))
 [1] 1
 
@@ -845,12 +854,12 @@ length(unique(esim_data$nok))
 unique(esim_data$nok)
 [1] 0 1
 
-# Is there any results marked with nok=1 identifier?
+# Are there any results marked with nok=1 identifier?
 length(esim_data$nok[esim_data$nok == "1"]) 
 [1] 207
 ```
 
-So we do have at least 207 values which are clearly represent demonstration exams. Note that it's not necesserily that evety DE marked with nok value, but either way it can be useful for future assumptions.
+So we do have at least 207 values which are clearly represent demonstration exams. Note that it's not necessarily that every DE is marked with nok value, but either way it can be useful for future assumptions.
 
 ---
 
@@ -932,7 +941,7 @@ Clearly there are no 700-scale marks, most likely because it was introduced by W
 Next we go over ```competitorMarker``` variable:
 
 ```R
-# Is there any valuable group markers for competitors?
+# Are there any valuable group markers for competitors?
 length(unique(esim_data$competitorMarker))
 [1] 1
 
@@ -944,10 +953,10 @@ Column is empty and can be easily discarded.
 
 ---
 
-Finally, we explore valuses for ```expertGroupMarker``` column:
+Finally, we explore values for ```expertGroupMarker``` column:
 
 ```R
-# Is there any group markers for experts?
+# Are there any group markers for experts?
 length(unique(esim_data$expertGroupMarker))
 [1] 8
 
@@ -955,7 +964,7 @@ unique(esim_data$expertGroupMarker)
 [1] NA     "CERT" "NO"   "Н"    "С"    "N"    "W"    "S"   
 ```
 
-There are some markers which are not really meaningful in context of our research, so this variable can be discarded. 
+There are some markers which are not really meaningful in the context of our research, so this variable can be discarded. 
 
 ### Transforming dataframe for brevity
 
@@ -1099,4 +1108,3 @@ nrow(esim_data)
 length(unique(esim_data$result)) == nrow(esim_data)
 [1] TRUE
 ```
-
