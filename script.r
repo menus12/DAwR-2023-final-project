@@ -128,6 +128,16 @@ esim_data <- esim_data %>%
   drop_na(mark100) %>% 
   filter(mark100 > 0)
 
+# How many observations where expert is NA?
+nrow(esim_data[is.na(esim_data$expert), ])
+# How many observations where expert is 0?
+nrow(esim_data %>% filter(expert == 0))
+
+# Removing observations where expert is missing (NA or 0)
+esim_data <- esim_data %>% 
+  drop_na(expert) %>% 
+  filter(expert > 0)
+
 # Check for duplicate result IDs
 length(unique(esim_data$result)) == nrow(esim_data)
 # Removing duplicate rows from dataframe
@@ -157,6 +167,32 @@ data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRU
 # statistics (if any) and so on
 
 # ------------ Results of the data analysis
+
+# Grouping results by competitors and regions
+cg <- esim_data %>% 
+  group_by(competitor, region)  %>% 
+  summarise(results = n(), 
+            mean_score100 = mean(mark100), 
+            max_score100 = max(mark100),
+            min_score100 = min(mark100)) 
+
+# Quick look at the summary
+cg
+
+# Plotting the linear regression between participation count and mean average score 
+cg %>% ggplot(aes(x = results, y = mean_score100)) +
+  geom_jitter() +
+  labs(x = "Participation count", 
+       y = "Mean score",
+       title = "Scatterplot of relationship of repeated participation and average scores") + 
+  geom_smooth(method = "lm", se = FALSE)
+
+library(moderndive)
+# Fit regression model
+model <- lm(mean_score100 ~ results, data = cg)
+# Get regression table
+get_regression_table(model)
+
 
 # Framing a table with frequency of competitor IDs
 n_occur <- data.frame(table(esim_data$competitor))

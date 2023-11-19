@@ -186,23 +186,23 @@ Below is a table with the name and description of the original variables, an ind
 |**is_accepted**|-|field for access in the business process|No|
 |**mark700**|-|700-point scale|No|
 
-Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```253 080``` unique results (~42% of original size):
+Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```49 034``` unique results (~3,6% of original size):
 
 ```R
 > glimpse(esim_data)
-Rows: 253,080
+Rows: 49,034
 Columns: 11
-$ result      <dbl> 305, 307, 308, 315, 316, 320, 322, 343, 353, 354, 355, 369, 370, 371, 372, 3…
-$ competitor  <dbl> 921, 1054, 1055, 856, 1061, 1096, 1098, 700, 705, 708, 703, 1150, 1149, 1151…
-$ competition <dbl> 23, 23, 23, 23, 23, 23, 23, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, …
-$ skill       <dbl> 176, 186, 186, 203, 203, 175, 203, 174, 174, 174, 174, 188, 188, 188, 188, 1…
-$ region      <dbl> 82, 82, 82, 82, 82, 82, 82, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, …
-$ mark100     <dbl> 45.82, 30.25, 26.00, 17.45, 63.25, 44.00, 41.70, 78.80, 74.10, 74.10, 78.80,…
-$ mark500     <dbl> 544, 480, 473, 450, 511, 516, 482, 508, 497, 497, 508, 511, 474, 473, 528, 5…
-$ medal       <chr> "GOLD", NA, NA, NA, "Medallion for Excellence", "BRONZE", NA, "BRONZE", NA, …
-$ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-$ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ expert      <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ result      <dbl> 43053, 53048, 53053, 53054, 53057, 53059, 53060, 53064, 53065, 53066, 5~
+$ competitor  <dbl> 36517, 23137, 15379, 18028, 18038, 23149, 15384, 18309, 18310, 16712, 2~
+$ competition <dbl> 182, 322, 322, 322, 322, 322, 322, 349, 349, 349, 322, 322, 322, 322, 3~
+$ skill       <dbl> 175, 183, 183, 183, 184, 184, 184, 185, 185, 185, 186, 186, 186, 186, 1~
+$ region      <dbl> 54, 62, 70, 76, 76, 62, 70, 76, 76, 77, 26, 33, 70, 76, 62, 77, 77, 76,~
+$ mark100     <dbl> 25.85, 64.60, 6.60, 10.90, 37.35, 30.85, 8.50, 22.60, 22.60, 7.90, 15.9~
+$ mark500     <dbl> 549, 561, 461, 468, 507, 495, 456, 539, 539, 480, 479, 516, 469, 512, 5~
+$ medal       <chr> "GOLD", "GOLD", NA, NA, "Medallion for Excellence", NA, NA, "SILVER", "~
+$ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
+$ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 430, 430, 0, 0~
+$ expert      <dbl> 43413, 10956, 15382, 1562, 10758, 10949, 15380, 746, 746, 158, 11425, 4~
 ```
 
 Number of unique and missing values for each column is provided below:
@@ -212,17 +212,17 @@ Number of unique and missing values for each column is provided below:
 +            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
 
             unique missing
-result      253080       0
-competitor  216341       0
-competition  14339       0
-skill          393       0
-region         199       0
-mark100       9505       0
-mark500        262   14544
-medal            5  117367
-timestamp   117755   45628
-team          6021  239617
-expert       27477  204046
+result       49034       0
+competitor   39579       0
+competition    549       0
+skill          300       0
+region         153       0
+mark100       8449       0
+mark500        187    2272
+medal            5   22001
+timestamp    38461    4120
+team          4789   38535
+expert       27475       0
 ```
 
 
@@ -638,6 +638,23 @@ esim_data <- esim_data %>%
   filter(mark100 > 0)
 ```
 
+To keep observations relevant to stated research questions we need to consider observations with missing data of experts participation, since some of the results might be not from competitions but from demonstration exams, where participants don't have a compatriot expert.
+
+```R
+# How many observations where mark100 is NA?
+nrow(esim_data[is.na(esim_data$expert), ])
+[1] 200409
+
+# How many observations where mark100 is 0?
+nrow(esim_data %>% filter(expert == 0))
+[1] 33571
+
+# Removing observations where expert is missing (NA or 0)
+esim_data <- esim_data %>% 
+  drop_na(expert) %>% 
+  filter(expert > 0)
+```
+
 We also would like to check whether there are any duplicate rows after export of raw data from eSIM:
 
 ```R
@@ -655,6 +672,22 @@ length(unique(esim_data$result)) == nrow(esim_data)
 [1] TRUE
 
 nrow(esim_data)
-[1] 253080
+[1] 49034
+```
+
+To provide additional insights on competitors and experts region of origin, we will upload a table with region names and join region names to the resulting dataset.
+
+```R
+# Load dataframe with region names
+regions <- read_csv2("Datafiles/regions.csv")
+glimpse(regions)
+
+Rows: 164
+Columns: 2
+$ code       <dbl> 1, 101, 4, 2, 102, 702, 3, 103, 5, 180, 6, 7, 8, 9, 109, 10, 11, 111, 82~
+$ regionName <chr> "Republic of Adygea", "Republic of Adygeya", "Republic of Altai", "Repub~
+
+# Join region names column to the resulting data frame
+esim_data <- inner_join(esim_data, regions, by = c("region" = "code"), na_matches = "na")
 ```
 
