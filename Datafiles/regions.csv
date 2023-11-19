@@ -1,5 +1,5 @@
 ﻿code;regionName
-1;Republic of Adygea
+1;Republic of Adygeya
 101;Republic of Adygeya
 4;Republic of Altai
 2;Republic of Bashkortostan
@@ -40,15 +40,15 @@
 122;Altai Territory
 75;Transbaikal Territory
 80;Transbaikal Territory
-41;Kamchatka Territory
-23;Krasnodar Territory
+41;Kamchatsky Krai
+23;Krasnodar Krai
 93;Krasnodar Krai
 123;Krasnodar Krai
 193;Krasnodar Krai
-24;Krasnoyarsk Territory
-84;Krasnoyarsk Territory
-88;Krasnoyarsk Territory
-124;Krasnoyarsk Territory
+24;Krasnoyarsky Krai
+84;Krasnoyarsky Krai
+88;Krasnoyarsky Krai
+124;Krasnoyarsky Krai
 59;Perm Territory
 81;Perm Territory
 159;Perm Territory
@@ -58,87 +58,87 @@
 26;Stavropol Territory
 126;Stavropol Territory
 27;Khabarovsk Territory
-28;Amur region
-29;Arkhangelsk region
-30;Astrakhan Oblast
-130;Astrakhan Oblast
-31;Belgorod region
-32;Bryansk Oblast
-33;Vladimir region
-34;Volgograd Region
-134;Volgograd Region
-35;Vologda Oblast
-36;Voronezh region
-136;Voronezh region
-185;Zaporozhye region
-37;Ivanovo region
-38;Irkutsk region
-85;Irkutsk region
-138;Irkutsk region
-39;Kaliningrad Oblast
-91;Kaliningrad Oblast
-139;Kaliningrad Oblast
-40;Kaluga region
-42;Kemerovo Region
-142;Kemerovo Region
-43;Kirov region
-44;Kostroma region
-45;Kurgan region
-46;Kursk region
-47;Leningrad Region
-147;Leningrad Region
-48;Lipetsk region
-49;Magadan region
-50;Moscow region
-90;Moscow region
-150;Moscow region
-190;Moscow region
-750;Moscow region
-790;Moscow region
-51;Murmansk region
-52;Nizhny Novgorod Region
-152;Nizhny Novgorod Region
-252;Nizhny Novgorod Region
-53;Novgorod Region
-54;Novosibirsk Region
-154;Novosibirsk Region
-754;Novosibirsk Region
-55;Omsk Region
-155;Omsk Oblast
-56;Orenburg region
-156;Orenburg region
-57;Orel region
-58;Penza Oblast
-158;Penza Oblast
-60;Pskov Oblast
-61;Rostov region
-161;Rostov region
-761;Rostov region
-62;Ryazan region
-63;Samara Region
-163;Samara region
-763;Samara region
-64;Saratov region
-164;Saratov region
-65;Sakhalin Region
-66;Sverdlovsk Oblast
-96;Sverdlovsk region
-196;Sverdlovsk region
-67;Smolensk region
-68;Tambov region
-69;Tver Region
-169;Tver Region
-70;Tomsk region
-71;Tula region
-72;Tyumen Region
-172;Tyumen region
-73;Ulyanovsk region
-173;Ulyanovsk region
-184;Kherson Oblast
-74;Chelyabinsk Oblast
-174;Chelyabinsk Oblast
-774;Chelyabinsk Oblast
-76;Yaroslavl region
+28;Amur oblast
+29;Arkhangelsk oblast
+30;Astrakhan oblast
+130;Astrakhan oblast
+31;Belgorod oblast
+32;Bryansk oblast
+33;Vladimir oblast
+34;Volgograd oblast
+134;Volgograd oblast
+35;Vologda oblast
+36;Voronezh oblast
+136;Voronezh oblast
+185;Zaporozhye oblast
+37;Ivanovo oblast
+38;Irkutsk oblast
+85;Irkutsk oblast
+138;Irkutsk oblast
+39;Kaliningrad oblast
+91;Kaliningrad oblast
+139;Kaliningrad oblast
+40;Kaluga oblast
+42;Kemerovo oblast
+142;Kemerovo oblast
+43;Kirov oblast
+44;Kostroma oblast
+45;Kurgan oblast
+46;Kursk oblast
+47;Leningrad oblast
+147;Leningrad oblast
+48;Lipetsk oblast
+49;Magadan oblast
+50;Moscow oblast
+90;Moscow oblast
+150;Moscow oblast
+190;Moscow oblast
+750;Moscow oblast
+790;Moscow oblast
+51;Murmansk oblast
+52;Nizhny Novgorod oblast
+152;Nizhny Novgorod oblast
+252;Nizhny Novgorod oblast
+53;Novgorod oblast
+54;Novosibirsk oblast
+154;Novosibirsk oblast
+754;Novosibirsk oblast
+55;Omsk oblast
+155;Omsk oblast
+56;Orenburg oblast
+156;Orenburg oblast
+57;Orel oblast
+58;Penza oblast
+158;Penza oblast
+60;Pskov oblast
+61;Rostov oblast
+161;Rostov oblast
+761;Rostov oblast
+62;Ryazan oblast
+63;Samara oblast
+163;Samara oblast
+763;Samara oblast
+64;Saratov oblast
+164;Saratov oblast
+65;Sakhalin oblast
+66;Sverdlovsk oblast
+96;Sverdlovsk oblast
+196;Sverdlovsk oblast
+67;Smolensk oblast
+68;Tambov oblast
+69;Tver oblast
+169;Tver oblast
+70;Tomsk oblast
+71;Tula oblast
+72;Tyumen oblast
+172;Tyumen oblast
+73;Ulyanovsk oblast
+173;Ulyanovsk oblast
+184;Kherson oblast
+74;Chelyabinsk oblast
+174;Chelyabinsk oblast
+774;Chelyabinsk oblast
+76;Yaroslavl oblast
 77;Moscow
 97;Moscow
 99;Moscow
@@ -155,11 +155,11 @@
 198;St. Petersburg
 92;Sevastopol
 192;Sevastopol
-79;Jewish Autonomous Region
+79;Jewish Autonomous oblast
 83;Nenets Autonomous Okrug
 86;Khanty-Mansiysk Autonomous Okrug - Yugra
 186;Khanty-Mansiysk Autonomous Okrug - Yugra
 87;Chukotka Autonomous Okrug
 89;Yamalo-Nenets Autonomous Okrug
 94;Territories outside the Russian Federation and serviced by the Department of Regime Facilities of the Ministry of Internal Affairs of Russia, Baikonur.
-188;Kharkov region
+188;Kharkov oblast
