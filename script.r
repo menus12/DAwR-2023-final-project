@@ -11,6 +11,8 @@ library(readxl)
 library(tidyverse)
 library(readr)
 library(skimr)
+library(moderndive)
+library(infer)
 
 # Loading excel sheets 
 frame1 <- read_excel("Datafiles/participants100.xlsx")
@@ -149,7 +151,10 @@ nrow(esim_data)
 # Load dataframe with region names
 regions <- read_csv2("Datafiles/regions.csv")
 glimpse(regions)
-# there are 168 region codes
+# there are 164 region codes
+
+# But in fact only 91 unique regions
+length(unique(regions$regionName))
 
 # Join region names column to the resulting data frame
 esim_data <- inner_join(esim_data, regions, by = c("region" = "code"), na_matches = "na", relationship = "many-to-many")
@@ -169,11 +174,11 @@ data.frame(unique=sapply(esim_data, function(x) sum(length(unique(x, na.rm = TRU
 summary_by_regionName <- esim_data %>%
   group_by(regionName) %>%
   summarise(
-    count = n(),                   # Count of observations
-    mean_mark100 = mean(mark100),  # Mean of mark100
+    count = n(),                       # Count of observations
+    mean_mark100 = mean(mark100),      # Mean of mark100
     median_mark100 = median(mark100),  # Median of mark100
-    sd_mark100 = sd(mark100),      # Standard deviation of mark100
-    avg_mark100 = mean(mark100)    # Average of mark100
+    sd_mark100 = sd(mark100),          # Standard deviation of mark100
+    avg_mark100 = mean(mark100)        # Average of mark100
 summary_by_regionName
 
 # Sort table by count of observations, most observations per region at the top
@@ -201,6 +206,9 @@ ggplot(filtered_data_top10, aes(x = as.factor(regionName), y = mark100)) +
 
 # ------------ Results of the data analysis
 
+# ---- Whether repeated participation in competitions 
+# ---- have a positive impact on a competitor's average score?
+
 # Grouping results by competitors and regions
 cg <- esim_data %>% 
   group_by(competitor, region)  %>% 
@@ -209,22 +217,37 @@ cg <- esim_data %>%
             max_score100 = max(mark100),
             min_score100 = min(mark100)) 
 
-# Quick look at the summary
+# Quick look at the summary 
 cg
 
 # Plotting the linear regression between participation count and mean average score 
 cg %>% ggplot(aes(x = results, y = mean_score100)) +
-  geom_jitter() +
+  geom_jitter(alpha = 0.5) +
   labs(x = "Participation count", 
        y = "Mean score",
-       title = "Scatterplot of relationship of repeated participation and average scores") + 
+       title = "Scatterplot of relationship of repeated competitors participation and average scores") + 
   geom_smooth(method = "lm", se = FALSE)
 
-library(moderndive)
 # Fit regression model
 model <- lm(mean_score100 ~ results, data = cg)
 # Get regression table
 get_regression_table(model)
+
+# Building Null Distribution
+null_distribution <- cg %>% 
+  specify(formula = mean_score100 ~ results) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "correlation")
+
+# Observation difference proportion
+obs_diff_prop  <- cg %>% 
+  specify(formula = mean_score100 ~ results) %>%
+  calculate(stat = "correlation")
+
+# Visualizing null distribution
+visualize(null_distribution, bins = 20) + 
+  shade_p_value(obs_stat = obs_diff_prop, direction = "both")
 
 
 # Framing a table with frequency of competitor IDs
@@ -245,10 +268,8 @@ comp_repeat$improve100 <- with(comp_repeat,
                                    ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
 
 # Ploting geom bar grouping repeated competitor participation cases by region
-# with exclusion of 
-# each first result (NA values)
-# results without experts (NA or 0)
-comp_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% filter(expert > 0) %>% 
+# with exclusion of each first result (NA values)
+comp_repeat %>% filter(!is.na(improve100)) %>% 
   ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
   geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
   labs(title = "Repeated competitor participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
@@ -258,15 +279,22 @@ comp_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% filter
         plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))
 
 # Ploting summary geom bar 
-# with exclusion of 
-# each first result (NA values)
-# results without experts (NA or 0)
-comp_repeat %>% filter(!is.na(improve100)) %>% filter(!is.na(expert)) %>% filter(expert > 0) %>% 
+# with exclusion of each first result (NA values)
+comp_repeat %>% filter(!is.na(improve100)) %>%  
   ggplot(mapping = aes(x = improve100)) + 
   geom_bar() +
   labs(title = "Repeated competitor participation\n", x = "Result has been improved", y = "Number of repeated participations") +
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
+
+# Summarizing proportions
+comp_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
+
+# ---- Whether repeated participation of a compatriot expert 
+# ---- have a positive impact on his/her compatriot competitors' average results?
 
 # Framing a table with frequency of experts IDs
 e_occur <- data.frame(table(esim_data$expert))
