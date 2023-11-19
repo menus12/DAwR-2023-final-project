@@ -251,7 +251,15 @@ expert       27477  204046
 ## Results of the data analysis
 <!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
 
+Summary statistics  
 
+![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/c1870674-e544-42c5-a749-38c96020c141)
+
+
+When analysing the summary statistics where the top 10 regions in terms of mark100 scores, the following could be noted:
+- there are some outliers 5 of the 10 regions, meaning the deviate a bit more from the bulk of the data. These outliers are data points (observations of results) that fall outside the typical range of the values of the dataset.
+- The presence of these outliers can affect the interpretation of the boxplot. The whiskers of the boxplot extend to 1.5 times the interquartile range (IQR) beyond the first and third quartiles.
+- The medians and Interquartile Ranges (IQR) in the boxplots are all relatively close to each other when compared against regions. It suggests that, on average, the central tendency of the the scores (mark100) is similar across the top 10 regions. 
 
 
 
@@ -263,9 +271,27 @@ expert       27477  204046
 
 ## Conclusions and recommendations
 <!-- including recommendations for further research -->
+Summary statistics
+
+The closeness of the medians implies that, on anverage, people in different regions perform similarly on the test. This could indicate a level of consistency in educational outcomes or test performance across the regions.
+It can also suggest that the educational systems or teaching methods in the various regions are providing similar levels of education or that the quality of educaton is relatively consistent across the regions.
+The narrow spread of the median could also mean that the variability in test scores within the region is limited. In other words, there might not be significant differences in individual performance within a given region.
+The presence of outliers in 5 of the 10 regions, even if they don't impact the median in a relative matter against the other regions, may offer further understanding into specific scores of high performance.
+The regions are not closely related in terms of location, but might share socioeconomic factors relative to each other. Factors like population income, demography, educational policies could give more sense regarding these relationships.
+
 
 ## Brief description of the division of work
 <!-- Who is responsible for which part of the report and script -->
+The tasks regarding the report was divided between the two authors of this report, Alex & David.  
+Alex: 
+- Was responsible to getting the dataset from external suppliers related to his work
+- Alex has industry domain knowledge and understood the concepts and structure of the supplied dataset
+- Alex setup the initial draft of the research questions and script of R in Github
+
+David:
+- Was respsonsible as a validation partner of Alex, as he did not have the same level of the domain knowledge
+- Validated the initial draft and script in Github by reviewing all steps taken, came up with suggestions and additions where necessary
+- Wrote the initial draft of the research paper
 
 ## Appendix 1. Customizing the original dataset
 
