@@ -175,13 +175,12 @@ summary_by_regionName <- esim_data %>%
   group_by(regionName) %>%
   summarise(
     count = n(),                       # Count of observations
-    mean_mark100 = mean(mark100),      # Mean of mark100
+    mean_mark100 = mean(mark100),      # Average of mark100
     median_mark100 = median(mark100),  # Median of mark100
-    sd_mark100 = sd(mark100),          # Standard deviation of mark100
-    avg_mark100 = mean(mark100)) %>%   # Average of mark100
+    sd_mark100 = sd(mark100)) %>%      # Standard deviation of mark100
   arrange(desc(count))                 # most observations per region at the top
 
-summary_by_regionName    
+summary_by_regionName
          
 # Filter the top 10 regions in terms of observations (count)
 top_regions <- esim_data %>%
