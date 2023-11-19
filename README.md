@@ -25,100 +25,49 @@ November 2023
 
 [WorldSkills Russia](https://worldskills.ru/) as a member organization is in charge to govern and oversee that national and regional competition events comply with WorldSkills International standards as well as for collecting and aggregating results countrywide.
 
-These qualification assessment standards and frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system, so that college graduates have to pass the demonstration exam in exactly the same way as competitors in the WorldSkills competition, with the only difference that the final score is not converted into a medal but into an exam grade.  
+Current research is targeted to explore and analyze data from WorldSkills Russia competition events to answer following questions:
 
-Current research is targeted to explore and analyze data from WorldSkills Russia competition events and demonstration exams to answer following questions:
-
-<!-- 
-- Does the regional training system have a significant impact on the competitor's performance?
-- Whether the presence of a compatriot expert has a significant effect on a competitor's performance? 
--->
-- Whether repeated participation in competitions significantly improves a competitor's average score?
-- Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
+- Does repeated participation in competitions have a positive effect on a competitor's average score?
+- Does the repeated participation of a compatriot expert have a positive effect on the average results of his/her compatriot competitors?
 
 These questions are formulated as followed:
 
 1. Impact of repeated participation on competitor's average score.
 
-_null hypothesis (h0):  
-The repeated participation in WorldSkills competitions does not significantly improve a competitor's average score._   
+    - _null hypothesis (h0): The repeated participation in WorldSkills Russia competitions does not improve a competitor's average score._   
 
-_alternative hypothesis (h1):  
-The repeated participation in WorldSkills competitions significantly improves a competitor's average score._
+    - _alternative hypothesis (h1): The repeated participation in WorldSkills Russia competitions improves a competitor's average score._
 
 2. Effect of repeated participation of a compatriot expert on competitor results
 
-_null hypothesis (h0):  
-The repeated participation of a compatriot expert does not significantly improve his/her competitor's (average) results in the competitions of WorldSkills Russia._  
+    - _null hypothesis (h0): The repeated participation of a compatriot expert in WorldSkills Russia competitions does not improve his/her competitor's (average) results._  
 
-_alternative hypothesis (h1):  
-The repeated participation of a compatriot expert significantly improves his/her compatriot competitor's average results in the competitions of WorldSkills Russia._
+   - _alternative hypothesis (h1): The repeated participation of a compatriot expert in WorldSkills Russia competitions improves his/her compatriot competitor's average results._
 
 ## Operationalization of the research questions
 <!-- Describe the data that will be used and how the questions will be answered on the basis of this data. The data analysis itself is not yet described here. So do tell ‘Data file [X] comes from [Y] and can answer the posed questions because [Z]’, but do not yet describe the data itself -->
 
 Each competition event uses the Competition Information System (CIS) to record competition results. A separate instance of CIS is used for each event, so all event results are stored in a separate database instance. In order to have an overview of all competition events, WorldSkills Russia has developed its own aggregation system called Electronic System for Internet Monitoring (eSIM).
 
-The raw data used for this research was kindly provided by the autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)" and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
+The raw data used for this research was kindly provided by the **autonomous non-profit organization "Agency for the Development of Professional Excellence (WorldSkills Russia)"** and is essentially a dump from the eSIM database, specifically from the competition results table. Therefore, the observation unit is a skills competition result for a given competitor for a given competition event.
 
 The following steps will make sure to operationalize the data so that the research questions that are formulated will be answered:
 
-- Data importing  
-The supplied datasets (participants datafiles) are subject to inherent limitations, notably the absence of certain pertinent data (personal, location) crucial for comprehensive analysis, necessitating a thorough examination of all variables. The wrangled dataset resulted in a more focused dataframe which could be used for exploration. Next to the datasets that include all of the observations, another dataset (regions datafile) has been joined to give context to the region codes in the main dataset.  
+- Data import and preparation
 
-- Data preparation  
-Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. This analytical function is a component of the _dplyr_ package. This _glimpse_ function displays the initial entries for each variable in a tabular format, arranged horizontally following the respective variable names. Furthermore, the data type of each variable is presented in brackets immediately following the variable's name. The abbreviations _int_ and _dbl_ refer to "integer" and "double", within the context of computer programming, denoting quantitative or numerical variables. It is worth mentioning that "doubles" need double the storage space on a computer or database compared to integers. In contrast, _chr_ corresponds to "character," a term denoting textual data in the programming world. There is a difference between the kinds of variables that are encountered in the data frames. There are identification variables and measurement variables. Identification variables are variables that uniquely identify each observational unit in case of competitors. The other variables describe the properties of each observational unit. This will help in the dissection of the dataset.
-    
-- Compute summary statistics & further analysis  
-As the datasets have been prepared and wrangled, the initial and fundamental step in exploratory data analysis (EDA) will be executed: examining the raw data values. This step is important in gaining an understanding of the raw data to assist in fixing issues later on. After taking a look at the data, the calculation of the summary statistics will be done from a regional point of view. Calculating the summary with the initial dataset was not possible as many observations were invalid or missing, for example from the original 600.000 number of rows, there were missing values in 250.734 of them. Cleaning the data beforehand made sure the data is of high enough quality to execute EDA.
+- Initial exploratory data analysis and summary statistics 
 
-The skim() output reports summaries for categorical variables (variable type: factor) separately from the numerical variables (variable type:numeric). For the categorical variable "region", it reports the following information: skim_variable, n_missing, complete_rate, ordered (Y/N), and n_unique, which are the number of missing, complete rate, if it's ordered or not, and total number of values.  
+- Build linear regression models and null hypotheses for both research questions
 
 These steps make sure the dataset is understandable, cleaned and prepared for exploration so the communication regarding the key results can be done to a broad audience.  
-
    
-<!-- ### Note on 500- and 700-scale marks
-
-The conversion of 100-scale marks into 500-scale (outdated in 2017, 700-scale is used since 2019) marks in the Competition Information System (CIS) serves a crucial purpose in the context of WorldSkills competitions. This conversion allows for a more precise and consistent assessment of competitors' skills across a wide range of skill areas.
-
-- **Uniformity and Comparability**: Different skills and competitions may have varying degrees of complexity and granularity. Converting scores to a 500-scale ensures that scores from various skills and competitions can be compared and ranked consistently. It levels the playing field and prevents bias in favor of any particular skill area.
-
-- **Detailed Assessment**: The 500-scale offers greater granularity, allowing judges to provide more detailed feedback and assessment. It enables a finer distinction between competitors, which is especially important when skills are closely matched in terms of quality.
-
-- **Eliminating Ties**: Using a 500-scale helps to minimize the chances of ties or draws in competitions. With more score points available, it's less likely that multiple competitors will end up with the same score.
-
-- **Enhanced Feedback**: Competitors can benefit from more precise feedback on their performance. This feedback is valuable for their personal growth and development in their respective skills.
-
-In essence, the conversion to a 500-scale mark in the CIS system ensures that the assessment process is fair, consistent, and capable of providing more nuanced feedback to competitors. It's an integral part of maintaining the high standards and integrity of WorldSkills competitions.
-
-It's also worth noting that 500 (700) scale scores are mathematically dependent on the scores of all competitors in all skills within a given competition, and therefore cannot be used to compare scores across competitions. -->
-
 ### Matching provided data with posed questions
 
 This dataset can be used to perform statistical analyses that will help provide evidence and insights into the impact of various factors on competitors' performance and whether these effects are statistically significant. To create a linear regression model based on the research questions, it is necessary to identify an outcome (dependent) variable and predictor (independent) variable(s) for each question.  
 
-In mathematical terms this will form an equation, _Y = a + bX_.  
+In mathematical terms this will form an equation, _Y = a + bX_, where _Y_ is the outcome variable, _X_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
 
-_Y_ is the outcome variable, _x_ will be the predictor, _a_ represents the intercept and _bX_ represents the slope associated with the predictor variable.
-
-<!-- 
-#### Does the regional training system have a significant impact on the competitor's performance?
-
-Just as in Olympic competition - different teams have different approaches to the training systems of their competitors, which can have a significant impact on their performance in competition.
-
-To answer this question, we can analyze the data by grouping competitors by their region of origin (regionID) and calculating the average performance (e.g., mark100) for each group. Then, we can use statistical tests to determine if there are significant differences in performance between regions. 
-
-#### Whether the presence of a compatriot expert has a significant effect on a competitor's performance?
-
-To investigate this, we can compare the average performance of competitors who had a compatriot expert (using the FK_COMPATRIOT column) with those who did not. Statistical tests can be used to assess if there are significant differences in performance between the two groups. 
-
-It is worth noting that during competition events, all competitors must have a compatriot expert who should cooperate with other experts to ensure accuracy, transparency and fairness in recording and managing competition results. It is a rule that a compatriot expert can't participate in the evaluation process of his own compatriot, but there might be cases when during conflict situations and dispute resolution compatriot experts should advocate for their compatriot competitors, e.g. when other experts don't give a mark for some aspects due to biased evaluation process description.
-
-Another scenario is the demonstration exams, which is not a competition itself and therefore participants don't have a compatriot experts so all results are assessed by a group of independent experts which are not affiliated with the college.
-
--->
-
-#### Whether repeated participation in competitions significantly improves a competitor's average score?
+#### Does repeated participation in competitions have a positive effect on a competitor's average score?
 
 WorldSkills Russia has different levels for local WorldSkills competitions:
 
@@ -131,29 +80,36 @@ WorldSkills Russia has different levels for local WorldSkills competitions:
 
 So there may be a case where a given competitor participates in a sequence of competitions at different levels (e.g. Regional, National, HiTech, DigitalSkills) or may be a guest competitor in other regional competitions (usually when preparing for National). It's reasonable to assume that the average score of such a competitor should improve each time he/she participates in the next competition.
 
-To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a significant improvement in scores with repeated participation.  
+To address this question, we can analyze the performance of competitors who have participated in multiple competitions over time. Group competitors into categories based on the number of competitions they've entered and calculate their average scores for each category. Then, use statistical tests or regression analysis to determine if there is a an improvement in scores with repeated participation.  
 
-Outcome Variable: Competitor's average score in skill competitions (for example the average grade/mark over multiple competitions).  
-Predictor Variable: A variable representing participation (for example 0 for non-repeated participation, 1 for repeated participation).
+- Outcome Variable: Competitor's average score over multiple competitions.  
 
-#### Whether repeated participation of a compatriot expert significantly improves his/her compatriot competitors' average results?
+- Predictor Variable: Competitor's number of repetitions in the competition (number of results).
+
+#### Does the repeated participation of a compatriot expert have a positive effect on the average results of his/her compatriot competitors?
 
 It's often the case that a particular region has the same designated expert for a particular skill competition, who represents the region at nationals. It's reasonable to assume that, in this case, the preparation methodology of his compatriot competitors should improve over time, and thus the result of an average competitor should tend to improve over time as well.
 
-To explore this, we can group competitors by the presence of a compatriot expert (``FK_COMPATRIOT``) and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert significantly improves the average results of their compatriot competitors. 
+To explore this, we can group competitors by the presence of a compatriot expert and analyze the average performance of their compatriot competitors in each group. Statistical tests or regression analysis can help assess if the repeated participation of a compatriot expert improves the average results of their compatriot competitors. 
 
-Outcome Variable: Average results of competitors (average grade/mark)  
-Predictor Variable: A variable representing the presence/absence of a compatriot expert who participated in multiple competitions.
+- Outcome Variable: Competitor's average score over multiple competitions.
+
+- Predictor Variable: Expert's number of repetitions in the competition (number of results).
+
+#### Which condition has more significant impact on score improvement?
+
+If there is a true positive correlation in both cases, we also would like to calculate the proportion of cases where scores were improved to see which condition have more significant impact on the average results.
 
 ## Description of the data used
 <!-- Which data/variables were recorded/used for the study, something about any missing values, a graphical representation and summary statistics. Please note that this is about providing insight into the data used, not yet about (the method used for) answering the research questions -->
 
-Raw data is provided as four XLSX tables:
+### Raw data sources
+
+Raw data is provided as tree XLSX tables:
 
 - participants100.xlsx
 - participants200.xlsx
 - participants300.xlsx
-
 
 The total number of observations in the three participant spreadsheets is 600.000. Due to the nature of the SQL scheme, some columns refer to other tables (fk, foreign keys) and due to local regulations, some of the related data (e.g. personal data such as competitor or expert name, age, gender, etc.) is not available for cross-border transfer, storage or processing.
 
@@ -166,7 +122,7 @@ Below is a table with the name and description of the original variables, an ind
 |**fkChamp**|competition|competition event reference (foreign key)|Yes|
 |**fkComp**|skill|skill trade reference (foreign key)|Yes|
 |**ChampRole**|-|ID of the participant's role at the competition |No|
-|**regionID**|region|code of participant's region origin |Yes|
+|**regionID**|region|code of participant's region origin (foreign key) |Yes|
 |**mark100**|mark100|100-point scale|Yes|
 |**mark500**|mark500|500-point scale|Yes|
 |**medal**|medal|type of medal awarded|Yes|
@@ -187,31 +143,20 @@ Below is a table with the name and description of the original variables, an ind
 |**is_accepted**|-|field for access in the business process|No|
 |**mark700**|-|700-point scale|No|
 
-Regions dataset:
-|Variable name|Renamed to|Comment from owner|Will be used|
-|---|---|---|---|
-|**code**|code|Code of region (primary key)|Yes|
-|**regionName**|regionName|Name of Region reference (foreign key)|Yes|  
+To have more observability an additional data frame was handcrafted from open sources which matching region codes to their actaul names (regions.csv):
+|Variable name|Comment|
+|---|---|
+|**code**|Code of region (primary key)
+|**regionName**|Name of Region reference
 
-As discussed earlier, the following steps were taken in the form of exploratory data analysis: importing, preparing in the form of wrangling and tidying, computing summary statistics and analysis.  
+Detailed data importing and preparation steps are noted in the Appendix 1 and in the included script.
 
-The importing, preparation of the data, and the function that have been used for summary statistics are noted in the Appendix 1 and in the included script.
-
-Computing the summary statistics of the top 10 regions in terms of observations resulted in the following Boxplot:
-
-The steps taken are as followed:
-- Join dataset with region names to the main dataset that has the codes
-- Grouped by region
-- Calculate summary statistics including the mean, median
-- Sort table by count of observations and filter the top 10 regions
-- Data visualization in a box plot
-
-Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```49 034``` unique results (~3,6% of original size):
+After customizing original dataset we have a resulting dataframe with 12 variables and ```47 861``` unique results (~3,82% of original size):
 
 ```R
 > glimpse(esim_data)
-Rows: 49,034
-Columns: 11
+Rows: 47,861
+Columns: 12
 $ result      <dbl> 43053, 53048, 53053, 53054, 53057, 53059, 53060, 53064, 53065, 53066, 5~
 $ competitor  <dbl> 36517, 23137, 15379, 18028, 18038, 23149, 15384, 18309, 18310, 16712, 2~
 $ competition <dbl> 182, 322, 322, 322, 322, 322, 322, 349, 349, 349, 322, 322, 322, 322, 3~
@@ -223,6 +168,7 @@ $ medal       <chr> "GOLD", "GOLD", NA, NA, "Medallion for Excellence", NA, NA, 
 $ timestamp   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
 $ team        <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 430, 430, 0, 0~
 $ expert      <dbl> 43413, 10956, 15382, 1562, 10758, 10949, 15380, 746, 746, 158, 11425, 4~
+$ regionName  <chr> "Novosibirsk oblast", "Ryazan oblast", "Tomsk oblast", "Yaroslavl oblas~
 ```
 
 Number of unique and missing values for each column is provided below:
@@ -232,59 +178,486 @@ Number of unique and missing values for each column is provided below:
 +            missing=sapply(esim_data, function(x) sum(is.na(x) | x == 0)))
 
             unique missing
-result       49034       0
-competitor   39579       0
-competition    549       0
+result       47861       0
+competitor   38625       0
+competition    514       0
 skill          300       0
-region         153       0
-mark100       8449       0
-mark500        187    2272
-medal            5   22001
-timestamp    38461    4120
-team          4789   38535
-expert       27475       0
+region         121       0
+mark100       8419       0
+mark500        186    2255
+medal            5   21487
+timestamp    37512    4017
+team          4572   37782
+expert       26805       0
+regionName      86       0
 ```
 
+### Data summary statistics
 
-## Results of the data analysis
-<!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
-
-Summary statistics  
+After we distinguished a relevant part of observations, the calculation of the summary statistics will be done for mark100 scores from a region point of view.
 
 When analyzing the summary statistics where the top 10 regions in terms of mark100 scores, the following could be noted:  
 - There are some outliers in 5 of the 10 regions, meaning they deviate a bit more from the bulk of the data. These outliers are data points (observations of results) that fall outside the typical range of the values of the dataset.
 - The presence of these outliers can affect the interpretation of the boxplot. The whiskers of the boxplot extend to 1.5 times the interquartile range (IQR) beyond the first and third quartiles.
 - The medians and interquartile ranges (IQR) in the boxplots are all relatively close to each other when compared against regions. It suggests that, on average, the central tendency of the scores (mark100) is similar across the top 10 regions. 
 
-![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/75ce92b0-10f2-4a3b-b224-c6e64f41ef42)  
+```R
+summary_by_regionName <- esim_data %>%
+  group_by(regionName) %>%
+  summarise(
+    count = n(),                       # Count of observations
+    mean_mark100 = mean(mark100),      # Average of mark100
+    median_mark100 = median(mark100),  # Median of mark100
+    sd_mark100 = sd(mark100)) %>%      # Standard deviation of mark100
+  arrange(desc(count))                 # most observations per region at the top
 
-![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/9fd13bec-6796-40df-a08a-3ed3c47e1ca4)
+summary_by_regionName
 
+# A tibble: 86 x 5
+   regionName                count mean_mark100 median_mark100 sd_mark100
+   <chr>                     <int>        <dbl>          <dbl>      <dbl>
+ 1 Magadan oblast             2671         41.3           40.7       23.4
+ 2 Sakhalin oblast            2441         39.7           38.5       23.0
+ 3 Novgorod oblast            2219         38.8           37.0       21.5
+ 4 Moscow                     2036         40.8           38.9       22.6
+ 5 Perm Territory             2018         45.7           43.0       25.0
+ 6 Republic of Bashkortostan  1464         44.3           42.9       25.3
+ 7 Kamchatsky Krai            1409         42.2           41.0       22.9
+ 8 Ryazan oblast              1388         41.8           41.8       22.2
+ 9 Ulyanovsk oblast           1299         40.6           37.4       23.6
+10 Republic of Altai          1153         46.9           46.0       21.6
+# i 76 more rows
+```
+
+We can also visualize this summary by filtering top 10 participation regions from original dataset and making a boxplot out of this dataframe.
+
+```R
+# Filter the top 10 regions in terms of observations (count)
+top_regions <- esim_data %>%
+  group_by(regionName) %>%
+  summarise(count = n()) %>%
+  top_n(10, wt = count) %>%
+  pull(regionName)
+
+# Filter the dataset for the top 10 regions
+filtered_data_top10 <- esim_data %>% filter(regionName %in% top_regions)
+    
+# Create a boxplot to visualize 'mark100' for the top 10 regions
+ggplot(filtered_data_top10, aes(x = as.factor(regionName), y = mark100)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of 'mark100' for Top 10 Regions",
+       x = "Region",
+       y = "Mark 100") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+![Boxplot for top 10 participating regions](./images/01-boxplot.png)
+
+As we can see, the avarage result from top 10 participating regions is not higher than 45 out of 100, and there is also a significant standard deviation that indicates that scores have a significant spread.
+
+With these findings in mind, we can move on to the actual analysis of our research hypotheses.
+
+## Results of the data analysis
+<!-- Results of the data analysis: The actual answer of the research questions based on data analysis, the use of specific graphs to gain insight into the answers to the questions and the results of the hypothesis testing -->
+
+### Relationship of repeated competitors participation and average scores 
+
+Our first question is whether the repeated participation in competitions have a positive effect on a competitor's average score?
+
+So first we would like to group results by competitors and regions and summarize the ``mark100`` variable to have a quick look at the outcome.
+
+```R
+# Grouping results by competitors and regions
+cg <- esim_data %>% 
+  group_by(competitor, region)  %>% 
+  summarise(results = n(), 
+            mean_score100 = mean(mark100), 
+            max_score100 = max(mark100),
+            min_score100 = min(mark100)) %>%
+  arrange(desc(results)) 
+
+# Quick look at the summary 
+cg
+
+# A tibble: 38,871 x 6
+# Groups:   competitor [38,625]
+   competitor region results mean_score100 max_score100 min_score100
+        <dbl>  <dbl>   <int>         <dbl>        <dbl>        <dbl>
+ 1     101215     65       7          48.7         88.0        29.1 
+ 2     106308     53       7          34.2         48.3        12.2 
+ 3      75717     65       6          28.4         51.3        12.8 
+ 4      82474     76       6          18.7         31.7         9.85
+ 5      98028     81       6          74.4         94.8        20   
+ 6     103102     65       6          34.1         93.4         3.04
+ 7     106341     53       6          56.5         95.6        20   
+ 8     106381     53       6          61.6         79.0        35.0 
+ 9     106959     59       6          86.6         95.8        66.9 
+10    1041592     76       6          39.7         60.4        16.2 
+# i 38,861 more rows
+```
+
+We find that competitors who have participated multiple times have a significant difference in minimum and maximum scores. However, the range is also significant, and it's not necessarily the case that each next result is better than the previous.
+
+Next, we will plot a simple linear regression to get a first idea of whether repeated participation has any effect on average scores.
+
+```R
+# Plotting the linear regression between participation count and mean average score 
+cg %>% ggplot(aes(x = results, y = mean_score100)) +
+  geom_jitter(alpha = 0.5) +
+  labs(x = "Participation count", 
+       y = "Mean score",
+       title = "Scatterplot of relationship of repeated competitors participation and average scores") + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+![Scatterplot of relationship of repeated competitors participation and average scores](./images/02-q1-scatterplot.png)
+
+Here we can spot weak but positive correlation between repeated competitors participation and average scores improvement.
+
+For better understanding of this relationship we can build a regression model.
+
+```R
+# Fit regression model
+c_model <- lm(mean_score100 ~ results, data = cg)
+
+# Get regression table
+get_regression_table(c_model)
+
+# A tibble: 2 x 7
+  term      estimate std_error statistic p_value lower_ci upper_ci
+  <chr>        <dbl>     <dbl>     <dbl>   <dbl>    <dbl>    <dbl>
+1 intercept    37.2      0.275     135.        0    36.7     37.7 
+2 results       2.05     0.204      10.1       0     1.65     2.45
+```
+
+From this regression table, we can conclude that each time a competitor participates, his or her mark100 score improves by an average of 2.05 points.
+
+To answer a formal question we also can build a null distibution and see how our actual observations fit into the Null Hypothesis:
+
+```R
+# Building Null Distribution
+null_distribution_q1 <- cg %>% 
+  specify(formula = mean_score100 ~ results) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "correlation")
+
+# Observation difference proportion
+obs_diff_prop_q1  <- cg %>% 
+  specify(formula = mean_score100 ~ results) %>%
+  calculate(stat = "correlation")
+
+obs_diff_prop_q1
+
+Response: mean_score100 (numeric)
+Explanatory: results (numeric)
+# A tibble: 1 x 1
+    stat
+   <dbl>
+1 0.0509
+
+# Visualizing null distribution
+visualize(null_distribution_q1, bins = 20) + 
+  shade_p_value(obs_stat = obs_diff_prop_q1, direction = "both")
+```
+
+![Simulation based null distribution](./images/03-q1-null-distribution.png)
+
+In the resulting plot, the solid dark line marks 0.0509 = 5.09%, which is the probability of obtaining a test statistic just as or more extreme than the observed test statistic assuming the null hypothesis H0 is true.
+
+In other words, we see that the value of the correlation between the average results and the number of times of participation in competitions, which we obtained, does not fit the hypothetical null distribution, where the average result does not correlate with the number of times of participation in competitions. Hence, we would be inclined to reject H0 and accept the alternative hypotesis the repetitive participation indeed have a positive impact on avarage score. 
+
+Nevertheless, we would like see how often this is the case in general and in the context of different regions. To accomplish this we will 
+
+- draw only results with repetitive participation;
+- go over each result and check whether the absolute score is better (higher) than the previous one.
+
+```R
+# Framing a table with frequency of competitor IDs
+n_occur <- data.frame(table(esim_data$competitor))
+
+# Sub-setting results with only those competitor IDs who participated more than 1 time
+comp_repeat <- esim_data %>% filter(competitor %in% n_occur[n_occur$Freq > 1, ]$Var1)
+
+# Ordering data frame by competitor ID and then by result ID
+comp_repeat <- comp_repeat[with(comp_repeat, order(competitor, result)), ]
+
+# Adding a column and computing the boolean value whether each next result is higher than previous (absolute score)
+# If this is a first result of a given competitor, value is NA
+# If this is not first result of a given competitor, and mark100 value is higher than previous mark100 value, than value is TRUE
+# If this is not first result of a given competitor, and mark100 value is lower than previous mark100 value, than value is FALSE
+comp_repeat$improve100 <- with(comp_repeat, 
+                            ifelse(competitor == lag(competitor), 
+                                   ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+
+# Ploting geom bar grouping repeated competitor participation cases by region
+# with exclusion of each first result (NA values)
+comp_repeat %>% filter(!is.na(improve100)) %>% 
+  ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
+  geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
+  labs(title = "Repeated competitor participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
+  scale_fill_manual(labels = c("False", "True"), values = c("red", "green")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))
+```
+
+![Bar plot for improvement rates by regions](./images/04-q1-improvement-by-regions.png)
+
+Indeed we see that repetitive participation have some posotive impact on absolute score but generally ratio is not clear, so we will plot a general ratio as well.
+
+```R
+# Ploting summary geom bar 
+# with exclusion of each first result (NA values)
+comp_repeat %>% filter(!is.na(improve100)) %>%  
+  ggplot(mapping = aes(x = improve100)) + 
+  geom_bar() +
+  labs(title = "Repeated competitor participation\n", x = "Result has been improved", y = "Number of repeated participations") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
+```
+
+![Bar plot for general ratio](./images/05-q1-general-ratio.png)
+
+So now we see that even repeated participation have a positive impact on avarage score improvement, the number of absolute score improvement cases is less than number of cases when absolute scores were worsen.
+
+### Relationship of repeated experts participation and average scores 
+
+Our second question is whether the repeated participation of a compatriot expert have a positive effect on the average results of his/her compatriot competitors?
+
+To figure this out we will likewise group results by experts and regions and summarize the mark100 variable to have a quick look at the outcome.
+
+```R
+# Grouping results by competitors and regions
+eg <- esim_data %>% 
+  group_by(expert, region)  %>% 
+  summarise(results = n(), 
+            mean_score100 = mean(mark100), 
+            max_score100 = max(mark100),
+            min_score100 = min(mark100)) %>%
+  arrange(desc(results)) 
+
+# Quick look at the summary 
+eg
+
+# A tibble: 27,205 x 6
+# Groups:   expert [26,805]
+   expert region results mean_score100 max_score100 min_score100
+    <dbl>  <dbl>   <int>         <dbl>        <dbl>        <dbl>
+ 1  25211     45      25          64.3         81.8        29.3 
+ 2  62816     26      20          67.0         85.4        53.4 
+ 3 106634     65      20          70.8         95.2        50.3 
+ 4  77970     49      19          72.0         85.4        58.4 
+ 5  18238     76      15          70.5         87.4        36.8 
+ 6  25683     16      15          75.1         85.3        56.9 
+ 7  30547      2      15          79.0         80.5        76   
+ 8  43014     65      15          27.7         54.8         4.51
+ 9  62196     62      15          69.9         86.5        58.6 
+10  94088      6      15          69.0         81.5        55.4 
+# i 27,195 more rows
+```
+
+The main difference that we can conlude from this summary is that experts have higher avarage scores rates during their repetitive participation than we saw previously from the competitors prospective.
+
+Next, we will plot a simple linear regression to get a first idea of whether repeated participation of experts has any effect on average scores.
+
+```R
+# Plotting the linear regression between expert participation count and mean average score 
+eg %>% ggplot(aes(x = results, y = mean_score100)) +
+  geom_jitter(alpha = 0.5) +
+  labs(x = "Participation count", 
+       y = "Mean score",
+       title = "Scatterplot of relationship of repeated experts participation and average scores") + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+![Bar plot for general ratio](./images/06-q1-scatterplot.png)
+
+We can also notice a higher positive correlation of avarage scores and repetitive participation of experts.
+
+Next we will build a regression model and check the regression table:
+
+```R
+# Fit regression model
+e_model <- lm(mean_score100 ~ results, data = eg)
+
+# Get regression table
+get_regression_table(e_model)
+
+# A tibble: 2 x 7
+  term      estimate std_error statistic p_value lower_ci upper_ci
+  <chr>        <dbl>     <dbl>     <dbl>   <dbl>    <dbl>    <dbl>
+1 intercept    35.3       0.22     161.        0    34.8     35.7 
+2 results       1.82      0.1       18.2       0     1.62     2.02
+```
+
+From this regression table, we can conclude that each time a expert participates, his or her compatriot competitor mark100 score improves by an average of 1.82 points, which is lower than we saw from previous regression table (2.05).
+
+To answer a formal question we also can build a null distibution and see how our actual observations fit into the Null Hypothesis:
+
+```R
+# Building Null Distribution
+null_distribution_q2 <- eg %>% 
+  specify(formula = mean_score100 ~ results) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "correlation")
+
+# Observation difference proportion
+obs_diff_prop_q2  <- eg %>% 
+  specify(formula = mean_score100 ~ results) %>%
+  calculate(stat = "correlation")
+
+obs_diff_prop_q2
+
+Response: mean_score100 (numeric)
+Explanatory: results (numeric)
+# A tibble: 1 x 1
+   stat
+  <dbl>
+1 0.109
+
+# Visualizing null distribution
+visualize(null_distribution_q2, bins = 20) + 
+  shade_p_value(obs_stat = obs_diff_prop_q2, direction = "both")
+```
+
+![Simulation based null distribution](./images/07-q1-null-distribution.png)
+
+In the resulting plot, the solid dark line marks 0.109 = 10.9%, which is the probability of obtaining a test statistic just as or more extreme than the observed test statistic assuming the null hypothesis H0 is true.
+
+In other words, we see that the value of the correlation between the average scores and the number of times of compatriot expert participation in competitions, which we obtained, does not fit the hypothetical null distribution, where the average result does not correlate with the number of times of expert participation in competitions. Hence, we would be inclined to reject H0 and accept the alternative hypotesis the repetitive expert participation indeed have a positive impact on avarage score. 
+
+Nevertheless, we would like see how often this is the case in general and in the context of different regions. To accomplish this we likewise
+
+- draw only results with repetitive expert participation;
+- go over each result and check whether the absolute score is better (higher) than the previous one.
+
+```R
+# Framing a table with frequency of experts IDs
+e_occur <- data.frame(table(esim_data$expert))
+
+# Subsetting results with only those expert IDs who participated more than 1 time
+expert_repeat <- esim_data %>% filter(expert %in% e_occur[e_occur$Freq > 1, ]$Var1)
+
+# Ordering data frame by expert ID and then by result ID
+expert_repeat <- expert_repeat[with(expert_repeat, order(expert, result)), ]
+
+# Adding a column and computing the boolean value whether each next result is higher than previous
+# If this is a first result of a given expert (compatriot competitor), value is NA
+# If this is not first result of a given expert (compatriot competitor), and mark100 value is higher than previous mark100 value, than value is TRUE
+# If this is not first result of a given expert (compatriot competitor), and mark100 value is lower than previous mark100 value, than value is FALSE
+expert_repeat$improve100 <- with(expert_repeat, ifelse(expert == lag(expert), ifelse(mark100 > lag(mark100), TRUE, FALSE), NA))
+
+# Ploting geom bar grouping repeated expert participation cases by region
+# with exclusion of each first result (NA values)
+expert_repeat %>% filter(!is.na(improve100)) %>% 
+  ggplot(mapping = aes(x = factor(regionName),fill = factor(improve100) )) + 
+  geom_bar(width = 0.5, position = position_dodge(width = 0.6)) +
+  labs(title = "Repeated expert participation (by region)\n", x = "Region name", y = "Number of repeated participations", fill = "Result has been improved\n") +
+  scale_fill_manual(labels = c("False", "True"), values = c("red", "green")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))
+```
+
+![Bar plot for general ratio](./images/08-q2-improvement-by-regions.png)
+
+As we see from the plot, speaking of absolute score improvement is even rare case than we saw during competitors repetitive participation.
+
+We can clearly show that with the plot of general ratio:
+
+```R
+# Ploting geom bar with exclusion of each first result (NA values)
+expert_repeat %>% filter(!is.na(improve100)) %>% 
+  ggplot(mapping = aes(x = improve100)) + 
+  geom_bar() +
+  labs(title = "Repeated expert participation\n", x = "Result has been improved", y = "Number of repeated participations") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
+```
+
+![Bar plot for general ratio](./images/09-q2-general-ratio.png)
+
+Here we can conclude that even repeated expert participation have a positive impact on avarage score improvement, the number of absolute score improvement cases is less than number of cases when absolute scores were worsen.
+
+#### Which condition has more significant impact on score improvement?
+
+By comparing ratios of absolute score improvement cases we can see that repetitive participation of given competitor have more significant impact (0.457) than repetitive participation of expert (0.316).
+
+```R
+# Summarizing proportions for competitors repetitive participation
+comp_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
+
+# A tibble: 2 x 3
+  improve100     n  freq
+  <lgl>      <int> <dbl>
+1 FALSE       5018 0.543
+2 TRUE        4218 0.457
+
+# Summarizing proportions for expert repetitive participation
+expert_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
+
+# A tibble: 2 x 3
+  improve100     n  freq
+  <lgl>      <int> <dbl>
+1 FALSE      14393 0.684
+2 TRUE        6663 0.316
+```
 
 ## Conclusions and recommendations
 <!-- including recommendations for further research -->
 Summary statistics
 
 The closeness of the medians implies that, on anverage, people in different regions perform similarly on the test. This could indicate a level of consistency in educational outcomes or test performance across the regions.
+
 It can also suggest that the educational systems or teaching methods in the various regions are providing similar levels of education or that the quality of educaton is relatively consistent across the regions.  
+
 The narrow spread of the median could also mean that the variability in test scores within the region is limited. In other words, there might not be significant differences in individual performance within a given region.  
+
 The presence of outliers in 5 of the 10 regions, even if they don't impact the median in a relative matter against the other regions, may offer further understanding into specific scores of high performance.
+
 The regions are not closely related in terms of location, but might share socioeconomic factors relative to each other. Factors like population income, demography, educational policies could give more sense regarding these relationships.
 
+From the above mentioned research we also can conclude that both conditions, such as 
+
+- repeated competitor participation in WorlSkills Russia competition
+- repeated compatriot expert participation in WorlSkills Russia competition
+
+have a positive impact on avarage scores of competitors (expert's compatriot compatitors).
+
+Nevertheless, we also studied that number of known cases, when absolute scores were improved each next participation are lower than number of cases when absolute scores were worsen.
+
+Even though, comparing these conditions, we can also conclude that repetitive participation of a competitor have more significant impact on avarage score improvement.
+
+Recomendations for future research mmay include:
+
+- study of correlation between absolute scores and multiple factors toghether
+- improvement of scores over time period
+- comparison of mark500 scores between different competitions over time
+- impact of team participation in scores improvement
 
 ## Brief description of the division of work
 <!-- Who is responsible for which part of the report and script -->
-The tasks regarding the report were divided between the two authors of this report, Alex & David. 
+The tasks regarding the report were divided between the two authors of this report, Aleksandr & David. 
 
-Alex Gorbachev: 
+Aleksandr Gorbachev: 
 - Was responsible to getting the dataset from external suppliers related to his work
-- Alex has industry domain knowledge and understood the concepts and structure of the supplied dataset
-- Alex setup the initial draft of the research questions and script of R in Github
+- Has industry domain knowledge and understood the concepts and structure of the supplied dataset
+- Setup the initial draft of the research questions and script
+- Performed parts of scripting for clean up and wrangling
 
 David Langeveld:  
-- Was responsible as a validation partner of Alex, as he did not have the same level of the domain knowledge
-- Validated the initial draft and script in Github by reviewing all steps taken, came up with suggestions and additions where necessary
+- Validated the initial draft and script by reviewing all steps taken, came up with suggestions and additions where necessary
 - Wrote the initial draft of the research paper
+- Implemented summary statistics and respective visualizations
+- Performed parts of scripting for visualizations of respective hypothesis testing
 
 ## Appendix 1. Customizing the original dataset
 
@@ -343,6 +716,7 @@ $ is_requested           <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 $ is_accepted            <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
 $ mark700                <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,~
 ```
+Exploration of the dataframes through the use of the _glimpse_ function is employed to retrieve metadata (data about data) into the contents of the data frame under consideration in this paper. 
 
 As we see, there are 600 000 observations and 25 columns total. There are many 0s and NA values at the first glance. 
 
@@ -419,26 +793,6 @@ Based on raw data samples and provided description from data owner, there are so
     - **excludeFromResault**: marker for "out of contest" result 
     - **competitorMarker**: marker for group competition
     - **expertGroupMarker**: marker for specific expert group
-
-<!-- 
-Let's start from ```medal``` variable:
-
-```R
-# How many different values for medals
-length(unique(esim_data$medal))
-
-[1] 5
-
-# What are the types of medals 
-unique(esim_data$medal)
-
-[1] NA                         "GOLD"                     "Medallion for Excellence"
-[4] "BRONZE"                   "SILVER"   
-```
-
-Here values are clear and represent types of medal awarded to competitors. Note that ```Medallion for Excellence``` is the medal awarded for competitors who are *above the avarage level across all skills within one competition*, e.g. who have score >=500 in ```mark500``` (or >=700 in ```mark700``` since 2019). This variable is clearly useful for analysis.
-
--->
 
 ---
 
@@ -689,7 +1043,9 @@ esim_data <- esim_data %>%
   filter(mark100 > 0)
 ```
 
-To keep observations relevant to stated research questions we need to consider observations with missing data of expert participation, since some of the results might be not from competitions but from demonstration exams, where participants don't have a compatriot expert.
+It's worth to mention, that this dataset contains not only competition results but also results from so called demonstration exams since these frameworks have also been adopted by WorldSkills Russia in the whole national vocational education and training system. But the demostration exams records have a difference in the way that competitors (students) don't have a compatriot expert (assessment is done by group of independent experts).
+
+In this regard, to keep observations relevant to stated research questions we need to consider observations with missing data of experts participation and remove them to able to compare final proportions of positive correlation if any.
 
 ```R
 # How many observations where mark100 is NA?
@@ -738,7 +1094,17 @@ Columns: 2
 $ code       <dbl> 1, 101, 4, 2, 102, 702, 3, 103, 5, 180, 6, 7, 8, 9, 109, 10, 11, 111, 82~
 $ regionName <chr> "Republic of Adygea", "Republic of Adygeya", "Republic of Altai", "Repub~
 
+# But in fact only 91 unique regions, due to some regions have multiple additional codes
+length(unique(regions$regionName))
+[1] 91
+
 # Join region names column to the resulting data frame
 esim_data <- inner_join(esim_data, regions, by = c("region" = "code"), na_matches = "na")
-```
 
+# How many observation we have after clean up and join
+nrow(esim_data)
+[1] 47861
+
+length(unique(esim_data$result)) == nrow(esim_data)
+[1] TRUE
+```

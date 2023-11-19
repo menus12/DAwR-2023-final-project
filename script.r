@@ -175,13 +175,12 @@ summary_by_regionName <- esim_data %>%
   group_by(regionName) %>%
   summarise(
     count = n(),                       # Count of observations
-    mean_mark100 = mean(mark100),      # Mean of mark100
+    mean_mark100 = mean(mark100),      # Average of mark100
     median_mark100 = median(mark100),  # Median of mark100
-    sd_mark100 = sd(mark100),          # Standard deviation of mark100
-    avg_mark100 = mean(mark100)) %>%   # Average of mark100
+    sd_mark100 = sd(mark100)) %>%      # Standard deviation of mark100
   arrange(desc(count))                 # most observations per region at the top
 
-summary_by_regionName    
+summary_by_regionName
          
 # Filter the top 10 regions in terms of observations (count)
 top_regions <- esim_data %>%
@@ -285,12 +284,6 @@ comp_repeat %>% filter(!is.na(improve100)) %>%
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
 
-# Summarizing proportions
-comp_repeat %>% filter(!is.na(improve100)) %>%
-  group_by(improve100) %>%
-  summarise(n = n()) %>%
-  mutate(freq = n / sum(n)) 
-
 # ---- Whether repeated participation of a compatriot expert 
 # ---- have a positive impact on his/her compatriot competitors' average results?
 
@@ -372,7 +365,15 @@ expert_repeat %>% filter(!is.na(improve100)) %>%
   theme_bw() +
   theme(plot.title = element_text(size = 20, face = "bold", color = "darkgreen"))  
 
-# Summarizing proportions
+# ---- Whether repeated participation of a compatriot expert 
+
+# Summarizing proportions for competitors repetitive participation
+comp_repeat %>% filter(!is.na(improve100)) %>%
+  group_by(improve100) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) 
+
+# Summarizing proportions for expert repetitive participation
 expert_repeat %>% filter(!is.na(improve100)) %>%
   group_by(improve100) %>%
   summarise(n = n()) %>%
