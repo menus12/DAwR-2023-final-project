@@ -200,13 +200,11 @@ The importing, preparation of the data, and the function that have been used for
 Computing the summary statistics of the top 10 regions in terms of observations resulted in the following Boxplot:
 
 The steps taken are as followed:
-- join dataset with region names to the main dataset that has the codes
-- grouped by region
-- calculate summary statistics including the mean, median
-  ![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/bc02dcc5-f4dc-42e5-a901-a3f123309ce7)
-- sort table by count of observations and filter the top 10 regions
-- data visualization in a box plot
-![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/a7735b3b-8bf8-4b49-ac88-0448513a87e5)
+- Join dataset with region names to the main dataset that has the codes
+- Grouped by region
+- Calculate summary statistics including the mean, median
+- Sort table by count of observations and filter the top 10 regions
+- Data visualization in a box plot
 
 Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```49 034``` unique results (~3,6% of original size):
 
@@ -253,20 +251,14 @@ expert       27475       0
 
 Summary statistics  
 
-![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/c1870674-e544-42c5-a749-38c96020c141)
+When analyzing the summary statistics where the top 10 regions in terms of mark100 scores, the following could be noted:  
+- There are some outliers in 5 of the 10 regions, meaning they deviate a bit more from the bulk of the data. These outliers are data points (observations of results) that fall outside the typical range of the values of the dataset.
+- The presence of these outliers can affect the interpretation of the boxplot. The whiskers of the boxplot extend to 1.5 times the interquartile range (IQR) beyond the first and third quartiles.
+- The medians and interquartile ranges (IQR) in the boxplots are all relatively close to each other when compared against regions. It suggests that, on average, the central tendency of the scores (mark100) is similar across the top 10 regions. 
 
+![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/75ce92b0-10f2-4a3b-b224-c6e64f41ef42)  
 
-When analysing the summary statistics where the top 10 regions in terms of mark100 scores, the following could be noted:
-- there are some outliers 5 of the 10 regions, meaning the deviate a bit more from the bulk of the data. These outliers are data points (observations of results) that fall outside the typical range of the values of the dataset.
-- the presence of these outliers can affect the interpretation of the boxplot. The whiskers of the boxplot extend to 1.5 times the interquartile range (IQR) beyond the first and third quartiles.
-- the medians and interquartile ranges (IQR) in the boxplots are all relatively close to each other when compared against regions. It suggests that, on average, the central tendency of the the scores (mark100) is similar across the top 10 regions. 
-
-
-
-
-
-
-
+![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/9fd13bec-6796-40df-a08a-3ed3c47e1ca4)
 
 
 ## Conclusions and recommendations
