@@ -193,7 +193,7 @@ Regions dataset:
 |**code**|code|Code of region (primary key)|Yes|
 |**regionName**|regionName|Name of Region reference (foreign key)|Yes|  
 
-As discussed earlier, the following steps where taken in the form of exploratory data analysis: importing, preparing in the form of wrangling and tidying, computing summary statistics and analysis.  
+As discussed earlier, the following steps were taken in the form of exploratory data analysis: importing, preparing in the form of wrangling and tidying, computing summary statistics and analysis.  
 
 The importing, preparation of the data, and the function that have been used for summary statistics are noted in the Appendix 1 and in the included script.
 
@@ -201,11 +201,11 @@ Computing the summary statistics of the top 10 regions in terms of observations 
 
 The steps taken are as followed:
 - join dataset with region names to the main dataset that has the codes
-- group by region
+- grouped by region
 - calculate summary statistics including the mean, median
   ![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/bc02dcc5-f4dc-42e5-a901-a3f123309ce7)
 - sort table by count of observations and filter the top 10 regions
-- visualise in a boxplot
+- data visualization in a box plot
 ![image](https://github.com/DavidLangeveld/DAwR-2023-final-project/assets/136804925/a7735b3b-8bf8-4b49-ac88-0448513a87e5)
 
 Detailed customization steps are described in Appendix 1. After customizing original dataset we have a resulting dataframe with 11 variables and ```49 034``` unique results (~3,6% of original size):
