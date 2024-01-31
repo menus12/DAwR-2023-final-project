@@ -16,6 +16,10 @@ November 2023
 ## Abstract
 <!-- Contains the purpose of the research carried out, the research questions that are dealt with, the research method and the most important findings -->
 
+The research aimed to understand the impact of repeated participation on competitors' scores and if expert participation affects competitors' results in WorldSkills Russia competitions. Utilizing regression models and statistical analyses on data from WorldSkills Russia, the study found a positive correlation between repeated participation and improved average scores for competitors, as well as a similar positive trend for expert participation. 
+
+The findings, while showing a modest impact on score improvements, suggest that both repeated competitor and expert participations can enhance performance, although the extent of improvement varies. The study recommends further analysis to explore the influence of additional factors on score progression and to compare outcomes across different competitive levels and team participation.
+
 ## Table of contents
 
 ## Introduction
