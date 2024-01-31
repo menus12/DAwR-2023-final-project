@@ -22,6 +22,28 @@ The findings, while showing a modest impact on score improvements, suggest that 
 
 ## Table of contents
 
+- [Preface](#preface)
+- [Abstract](#abstract)
+- [Table of contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Operationalization of the research questions](#operationalization-of-the-research-questions)
+  * [Matching provided data with posed questions](#matching-provided-data-with-posed-questions)
+- [Description of the data used](#description-of-the-data-used)
+  * [Raw data sources](#raw-data-sources)
+  * [Data summary statistics](#data-summary-statistics)
+- [Results of the data analysis](#results-of-the-data-analysis)
+  * [Relationship of repeated competitors participation and average scores](#relationship-of-repeated-competitors-participation-and-average-scores)
+  * [Relationship of repeated experts participation and average scores](#relationship-of-repeated-experts-participation-and-average-scores)
+- [Conclusions and recommendations](#conclusions-and-recommendations)
+- [Brief description of the division of work](#brief-description-of-the-division-of-work)
+- [Appendix 1. Customizing the original dataset](#appendix-1-customizing-the-original-dataset)
+  * [Exploring unique values for variables](#exploring-unique-values-for-variables)
+  * [Transforming dataframe for brevity](#transforming-dataframe-for-brevity)
+  * [Cleaning up observations](#cleaning-up-observations)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## Introduction
 <!-- An introductory chapter in which the purpose and design of the (sub)study is explained and in which the research questions are described -->
 
